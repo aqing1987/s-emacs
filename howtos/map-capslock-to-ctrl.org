@@ -1,0 +1,20 @@
+#+TITLE: Map capslock to Ctrl
+
+* why
+Map the capslock key to ctrl can help me to avoid "Emacs pinky"
+
+* steps
+** change config
+#+BEGIN_SRC sh
+$ sudo vi /etc/default/keyboard
+#+END_SRC
+modify `XKBOPTIONS' as below:
+#+BEGIN_SRC info
+XKBOPTIONS="ctrl:nocaps"
+#+END_SRC
+
+** update config
+#+BEGIN_SRC sh
+sudo dpkg-reconfigure keyboard-configuration
+#+END_SRC
+
