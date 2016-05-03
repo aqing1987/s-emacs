@@ -1,0 +1,15 @@
+1. install depends
+$ sudo apt-get install build-essential
+
+2. download emacs24.5 libs
+$ sudo apt-get build-dep emacs24
+
+3. download emacs24.5 src
+wget -c http://ftp.gnu.org/gnu/emacs/emacs-24.5.tar.xz
+
+4. compile & install
+tar xf emacs-24.5.tar.xz
+cd emacs-24.5
+./configure
+make 
+sudo make install
