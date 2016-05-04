@@ -1,18 +1,3 @@
-;; =============================================================
-;; === load path config
-;; =============================================================
-(add-to-list 'load-path "~/.emacs.d/lisp")
-
-;; === Source Tag
-;(setq tags-file-name "~/workspace/source-analysis/linux-source-3.14/TAGS")
-
-
-;; =============================================================
-;; === indenpendent global key
-;; =============================================================
-
-;; goto-line config
-(global-set-key [(control t)] 'goto-line)
 
 ;; =============================================================
 ;; === org mode
@@ -61,60 +46,6 @@
 ;; =============================================================
 (add-to-list 'load-path "~/.emacs.d/lisp/php-mode")
 (require' php-mode)
-
-;; =============================================================
-;; === cc-choose-style-for-mode	
-;; =============================================================
-(require' cc-mode)
-
-;;=== indent config
-(setq indent-tabs-mode nil)
-(setq default-tab-width 4)
-(setq tab-width 4)
-
-(defconst my-c-style
-  '((c-tab-always-indent        . t)
-    (c-comment-only-line-offset . 4)
-    (c-hanging-braces-alist     . ((substatement-open after)
-                                   (brace-list-open)))
-    (c-hanging-colons-alist     . ((member-init-intro before)
-                                   (inher-intro)
-                                   (case-label after)
-                                   (label after)
-                                   (access-label after)))
-    (c-cleanup-list             . (scope-operator
-                                   empty-defun-braces
-                                   defun-close-semi))
-    (c-offsets-alist            . ((arglist-close . c-lineup-arglist)
-                                   (substatement-open . 0)
-                                   (case-label        . 4)
-                                   (block-open        . 0)
-                                   (knr-argdecl-intro . -)))
-    (c-echo-syntactic-information-p . t)
-    )
-  "rex Programming Style")
-
-;; offset customizations not in my-c-style
-(setq c-offsets-alist '((member-init-intro . ++)))
-
-;; Customizations for all modes in CC Mode.
-(defun my-c-mode-common-hook ()
-  ;; add my personal style and set it for the current buffer
-  (c-add-style "PERSONAL" my-c-style t)
-  ;; other customizations
-  (setq tab-width 4
-        ;; this will make sure spaces are used instead of tabs
-        indent-tabs-mode nil)
-  ;; we like auto-newline and hungry-delete
-					;(c-toggle-auto-hungry-state 1)
-  ;; key bindings for all supported languages.  We can put these in
-  ;; c-mode-base-map because c-mode-map, c++-mode-map, objc-mode-map,
-  ;; java-mode-map, idl-mode-map, and pike-mode-map inherit from it.
-  (define-key c-mode-base-map "\C-m" 'c-context-line-break)
-  (define-key c-mode-base-map [(f7)] 'compile)
-  )
-
-(add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 
 ;; =============================================================
 ;; === cscope
@@ -252,20 +183,14 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
-;; line number
-(require' line-num)
-(global-linum-mode t)
 
 (setq default-line-spaceing 4)
 (setq default-fill-column 80)
 
-;; title 
-(setq frame-title-format "E = MC^2")
 
 (set-mouse-color "white")
 (setq-default cursor-type 'bar)
 
-(fset 'yes-or-no-p 'y-or-n-p)
 
 (show-paren-mode t)
 (setq show-paren-style 'parentheses)
@@ -292,7 +217,6 @@
 (menu-bar-mode -1)
 
 (setq column-number-mode t)
-(setq line-number-mode t)
 
 (setq visible-bell t)
 (setq inhibit-startup-message t)
