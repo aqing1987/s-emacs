@@ -1,0 +1,11 @@
+#+title: company found no clang executable
+
+* descp
+when I open an "xx.c" file in emacs, there is message
+shown in *Message* buffer as below:
+
+Company found no clang executable
+
+* solve
++ sudo apt-get install clang-3.6
++ sudo ln -s /usr/bin/clang-3.6 /usr/bin/clang
