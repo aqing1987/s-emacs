@@ -35,7 +35,8 @@
 		      yasnippet
 			  auto-complete
 			  tabbar
-		     
+			  ;; theme
+			  monokai-theme
 		     )  "Default packages")
 
 (setq package-selected-packages my/packages)
@@ -114,3 +115,7 @@
      ))))  
   
 (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)  
+
+
+;; === theme
+(load-theme 'monokai t)
