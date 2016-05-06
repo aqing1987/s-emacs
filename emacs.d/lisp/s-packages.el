@@ -58,6 +58,9 @@
 ;; enable company mode
 (global-company-mode t)
 
+;; === cedet
+(global-ede-mode t)
+
 ;; === ecb
 (require 'ecb)
 (setq stack-trace-on-error nil)
