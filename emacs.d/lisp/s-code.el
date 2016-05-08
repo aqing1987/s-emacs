@@ -26,7 +26,7 @@
                                    defun-close-semi))
     (c-offsets-alist            . ((arglist-close . c-lineup-arglist)
                                    (substatement-open . 0)
-                                   (case-label        . 4)
+                                   (case-label        . 0)
                                    (block-open        . 0)
                                    (knr-argdecl-intro . -)))
     (c-echo-syntactic-information-p . t)
