@@ -2,7 +2,7 @@
 ;; === load org latex config
 ;; refs https://github.com/tumashu/ox-latex-chinese
 (require 'ox-latex-chinese)
-
+(oxlc/toggle-ox-latex-chinese t)
 
 (setq org-src-fontify-natively t)
 

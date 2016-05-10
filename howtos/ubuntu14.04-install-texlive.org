@@ -1,0 +1,53 @@
+#+title: ubuntu14.04 install texlive
+
+* download texlive
+
+1. 中国科学技术大学镜像：http://mirrors.ustc.edu.cn/CTAN/systems/texlive/Images/
+2. 清华大学镜像：http://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/
+
+* install perl-tk
+used for installing texlive
+
+#+BEGIN_SRC sh
+sudo apt-get install perl-tk
+#+END_SRC
+
+* install texlive
+
+1. right click texlive2015**.iso, "open with disk image mounter"
+2. cd /media/usr/TeXLive2015
+3. sudo ./install-tl -gui
+4. config env
+
+Add /usr/local/texlive/2015/texmf-dist/doc/man to MANPATH.
+Add /usr/local/texlive/2015/texmf-dist/doc/info to INFOPATH.
+Most importantly, add /usr/local/texlive/2015/bin/x86_64-linux
+to your PATH for current and future sessions.
+
+add below to ~/.bashrc
+#+BEGIN_SRC sh
+PATH=/usr/local/texlive/2015/bin/x86_64-linux:$PATH; export PATH  
+MANPATH=/usr/local/texlive/2015/texmf-dist/doc/man:$MANPATH; export MANPATH  
+INFOPATH=/usr/local/texlive/2015/texmf-dist/doc/info:$INFOPATH; export INFOPATH  
+#+END_SRC
+
+add source ~/.bashrc
+
+5. test
+#+BEGIN_SRC sh
+tex -version
+#+END_SRC
+Copyright 2015 D.E. Knuth.
+
+* install texworks
+#+BEGIN_SRC sh
+sudo aptitude install texworks
+#+END_SRC
+
+* install chinese font wqy
+#+BEGIN_SRC sh
+sudo apt-get install ttf-wqy-*
+#+END_SRC
+* error fix
+** LaTeX Error: File `float.sty' not found.
+ls /usr/local/texlive/2015/texmf-dist/tex/latex/float
