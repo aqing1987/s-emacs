@@ -29,22 +29,24 @@
 (require 'cl)
 
 ;; add whatever packages you want here
-(defvar my/packages '(
-		      company
-		      ecb
-		      yasnippet
-			  auto-complete
-			  tabbar
-			  ;; theme
-			  monokai-theme
-		     )  "Default packages")
+(defvar my/packages
+  '(
+	company
+	xcscope
+	ecb
+	yasnippet
+	auto-complete
+	tabbar
+	;; theme
+	monokai-theme
+	)  "Default packages")
 
 (setq package-selected-packages my/packages)
 
 (defun my/packages-installed-p ()
   (loop for pkg in my/packages
-	when (not (package-installed-p pkg)) do (return nil)
-	finally (return t)))
+		when (not (package-installed-p pkg)) do (return nil)
+		finally (return t)))
 
 
 (unless (my/packages-installed-p)
@@ -57,6 +59,9 @@
 
 ;; enable company mode
 (global-company-mode t)
+
+;; === cscope
+(require 'xcscope)
 
 ;; === cedet
 (global-ede-mode t)
@@ -116,9 +121,8 @@
     (t  
      "User Buffer"  
      ))))  
-  
-(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)  
 
+(setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)  
 
 ;; === theme
 (load-theme 'monokai t)
