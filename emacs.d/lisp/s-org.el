@@ -1,4 +1,9 @@
 (require 'org)
+;; === load org latex config
+;; refs https://github.com/tumashu/ox-latex-chinese
+(require 'ox-latex-chinese)
+
+
 (setq org-src-fontify-natively t)
 
 
@@ -12,3 +17,4 @@
 
 ;; set org-agenda 
 (global-set-key (kbd "C-c a") 'org-agenda)
+
