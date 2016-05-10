@@ -2,7 +2,7 @@
 
 ;; load els
 (load "s-ui.el")
-(load "s-keybindings.el")
 (load "s-org.el")
 (load "s-code.el")
 (load "s-packages.el")
+(load "s-keybindings.el")
