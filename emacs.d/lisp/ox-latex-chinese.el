@@ -30,6 +30,19 @@
 ;;; Commentary:
 
 ;; * README                                                             :README:
+;; ** 简介
+;; ox-latex-chinese 是一个 org-mode 工具，它可以帮助 org-mode 中文用户简单快速的
+;; 配置 "org->latex->pdf" 工作环境。
+
+;; 注意：这个工具只是让 中文 pdf *基本正确* 的生成，如果你需要生成 *完美* 的中文 pdf，
+;; 就需要花时间深入的了解下面工具：
+
+;; 1. TeX 系统，比如：TexLive
+;; 2. Ctex 宏包以及其相关工具（实现中文 LaTeX 的主要方式）
+;; 3. ox-latex.el (org-mode 的 Latex 导出模块)
+
+;; [[./snapshots/ox-latex-chinese.gif]]
+
 ;; ** 下载并安装 Texlive
 ;; *** 下载 Tex Live ISO 镜像
 ;; TeX Live 支持 Linux，Windows 以及 MacOX 多种操作系统，安装方式多种多样，
@@ -43,7 +56,8 @@
 ;; 2. 清华大学镜像：http://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/
 
 ;; *** 挂载已经下载的 ISO 镜像
-;; 1. 下载安装 winmount 或者 DAEMON Tools，这两个工具可以将 ISO 文件挂载到一个盘符，比直接解压缩快速方便。
+;; 1. 下载安装 [[http://wincdemu.sysprogs.org/][wincdemu]], winmount 或者 DAEMON Tools，
+;;    这类工具可以将 ISO 文件挂载到一个盘符，比直接解压缩快速方便。
 ;; 2. 将 ISO 镜像挂载到 “Z:\”
 
 ;; *** 运行安装程序
@@ -67,7 +81,7 @@
 
 ;; 1. 运行 Tex Live 管理器： 开始 > 程序 > Tex Live 2015 > Tex Live Manager
 ;; 2. 载入本地宏包仓库：tlmgr > 载入其它仓库，在弹出的对话框中选择 “choose local directory”，载入本地仓库 “Z:”。
-;; 3. 安装所需宏包： collection-langcjk, collection-langchinese, ctex, ctex-faq, bibtex8, environ, trimspaces, zhnumber, wrapfig, capt-of, latexmk
+;; 3. 安装所需宏包： collection-langcjk, collection-langchinese, ctex, ctex-faq, bibtex8, environ, trimspaces, zhnumber, wrapfig, capt-of, latexmk, dvipng
 
 
 ;; **** 第二种方式：使用 tlmge 命令安装
@@ -83,13 +97,8 @@
 ;;    #+END_EXAMPLE
 ;; 4. 安装所需宏包
 ;;    #+BEGIN_EXAMPLE
-;;    tlmgr install collection-langcjk collection-langchinese ctex ctex-faq bibtex8 environ trimspaces zhnumber wrapfig capt-of latexmk
+;;    tlmgr install collection-langcjk collection-langchinese ctex ctex-faq bibtex8 environ trimspaces zhnumber wrapfig capt-of latexmk dvipng
 ;;    #+END_EXAMPLE
-
-;; *** 安装所需要的字体
-;; 将所需要的字体文件（ttf或者ttc文件）拷贝到 window 字体目录中就可以了。
-
-;; 1. 文泉驿微米黑：http://wenq.org/wqy2/index.cgi?MicroHei
 
 ;; ** 安装并配置 ox-latex-chinese
 ;; *** 安装
@@ -151,8 +160,14 @@
 ;;     tlmgr install wrapfig
 ;;     #+END_EXAMPLE
 ;;  2. 如果没有找到 “wrapfig” 宏包，你需要找到哪个宏包包含 wrapfig.sty，一个简单的方式就是用 google 搜索 wrapfig.sty，一般会有相关的信息。
-
-
+;; *** 无法预览 Latex 片断
+;; 1. 确保 emacs 可以显示 png 文件，具体参考：ftp://ftp.gnu.org/gnu/emacs/windows/README
+;; 2. 安装 [[http://www.imagemagick.org/][imagemagick]] 和 [[http://ghostscript.com/][ghostscript]]
+;; 3. 设置 emacs
+;; #+BEGIN_EXAMPLE
+;; ;; (setq org-latex-create-formula-image-program 'dvipng)   ;不支持中文
+;; (setq org-latex-create-formula-image-program 'imagemagick) ;支持中文
+;; #+END_EXAMPLE
 
 ;;; Code:
 ;; * 代码                                                          :code:
@@ -170,6 +185,19 @@
   "Please see the info of `org-latex-coding-system', when `oxlc/org-latex-chinese-enable'
 set to t, its value will override the value of `org-latex-coding-system' before exporting
 to latex."
+  :group 'org-export-latex-chinese)
+
+(defcustom oxlc/org-latex-fonts
+  '((mainfont "Times New Roman")
+    (CJKmainfont "WenQuanYi Zen Hei" "SimSun" "宋体" "新宋体" "宋体" "STSong" "STZhongson" "华文中宋")
+    (CJKmainfont-italic "WenQuanYi Zen Hei" "KaiTi_GB2312" "楷体" "KaiTi" "楷体_GB2312" "STKaiti" "华文行楷")
+    (CJKsansfont "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑" "微软雅黑"
+                 "Microsoft Yahei" "Microsoft_Yahei"  "文泉驿等宽正黑" "黑体"
+                 "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "华文细黑")
+    (CJKmonofont "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑" "微软雅黑"
+                 "Microsoft Yahei" "Microsoft_Yahei"  "文泉驿等宽正黑" "黑体"
+                 "文泉驿正黑" "文泉驿点阵正黑" "SimHei" "华文细黑"))
+  "Set fonts candidates which will used by latex."
   :group 'org-export-latex-chinese)
 
 (defcustom oxlc/org-latex-commands
@@ -234,16 +262,42 @@ org 不建议自定义 org-latex-default-package-alist 变量，但 'inputenc' a
   :group 'org-export-latex-chinese)
 
 (defcustom  oxlc/org-latex-packages-alist
-  '("
+  (list
+   "
 %%% 默认使用的latex宏包 %%%
 \\usepackage{tikz}
 \\usepackage{CJKulem}
 \\usepackage{graphicx}
 
-%%% 设置中文字体 %%%
-\\setCJKmainfont[ItalicFont={KaiTi_GB2312}]{SimSun}% 文鼎宋体和楷书
-\\setCJKsansfont{WenQuanYi Micro Hei}% 文泉驿的黑体
-\\setCJKmonofont{WenQuanYi Micro Hei}
+\\pagestyle{empty}
+
+\\usepackage{listings}
+\\usepackage{color}
+
+\\definecolor{mygreen}{rgb}{0,0.6,0}
+\\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+%%% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+\\lstset{ %
+alsolanguage=Java,
+alsolanguage=C,
+basicstyle=\\footnotesize,
+tabsize=4,
+frame=single,
+breaklines=true,
+captionpos=b,
+showstringspaces=false,
+showtabs=false,
+stepnumber=2,          
+numbers=left,          
+numbersep=5pt,
+numberstyle=\\tiny\\color{mygray},
+backgroundcolor=\\color{white},
+commentstyle=\\color{mygreen},
+keywordstyle=\\color{blue},
+stringstyle=\\color{mymauve},
+}
 
 %%% 设置页面边距 %%%
 \\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry} %")
@@ -282,6 +336,40 @@ to latex."
     (advice-remove 'org-export-as #'oxlc/org-export-as)
     (advice-remove 'org-latex-compile #'oxlc/org-latex-compile)))
 
+(defun oxlc/generate-latex-fonts-setting ()
+  "Generate a latex fonts setting."
+  (let ((mainfont (oxlc/get-available-font 'mainfont))
+        (cjkmainfont-italic (oxlc/get-available-font 'CJKmainfont-italic))
+        (cjkmainfont (oxlc/get-available-font 'CJKmainfont))
+        (cjksansfont (oxlc/get-available-font 'CJKsansfont))
+        (cjkmonofont (oxlc/get-available-font 'CJKmonofont)))
+    (concat
+     (when mainfont (format "\\setmainfont{%s}\n" mainfont))
+     (when cjkmainfont
+       (if cjkmainfont-italic
+           (format "\\setCJKmainfont[ItalicFont={%s}]{%s}\n" cjkmainfont-italic cjkmainfont)
+         (format "\\setCJKmainfont{%s}\n" cjkmainfont)))
+     (when cjksansfont (format "\\setCJKsansfont{%s}\n" cjksansfont))
+     (when cjkmonofont (format "\\setCJKmonofont{%s}\n" cjkmonofont)))))
+
+(defun oxlc/get-available-font (fontclass)
+  (let* ((fonts-list (cdr (assoc fontclass oxlc/org-latex-fonts)))
+         (font (car (cl-remove-if
+                     #'(lambda (fontname)
+                         (not (oxlc/font-available-p fontname)))
+                     fonts-list))))
+    (unless font
+      (message (format "org-latex-chinese: Emacs can't find an available (%s) font for latex, ignore!"
+                       (symbol-name fontclass))))
+    font))
+
+(defun oxlc/font-available-p (fontname)
+  (mapcar #'(lambda (x)
+              (substring-no-properties x))
+          (cl-remove-if #'(lambda (x)
+                            (not (string-match-p (concat "^" fontname "$") x)))
+                        (font-family-list))))
+
 (defun oxlc/get-override-value (variable)
   "返回 `variable' 对应的 ox-latex-chinese 变量的取值。"
   (push variable oxlc/overrided-variables)
@@ -296,7 +384,10 @@ to latex."
             (org-latex-classes (oxlc/get-override-value 'org-latex-classes))
             (org-latex-default-packages-alist (oxlc/get-override-value 'org-latex-default-packages-alist))
             (org-format-latex-header (oxlc/get-override-value 'org-format-latex-header))
-            (org-latex-packages-alist (oxlc/get-override-value 'org-latex-packages-alist)))
+            (org-latex-packages-alist
+             `(,(oxlc/generate-latex-fonts-setting)
+               ,@(oxlc/get-override-value 'org-latex-packages-alist))))
+		(setq org-latex-listings 'listings)
         (message (concat "注意：被 ox-latex-chinese 包 *强制* 覆盖得变量有："
                          (mapconcat #'symbol-name (delete-dups oxlc/overrided-variables) ", ")
                          "."))
@@ -306,8 +397,9 @@ to latex."
 (defun oxlc/org-latex-compile (orig-fun texfile &optional snippet)
   (if oxlc/ox-latex-chinese-enable
       (let ((org-latex-pdf-process
-             (if snippet (car (cdr org-latex-commands))
-               (car org-latex-commands))))
+             (if snippet
+                 (car (cdr oxlc/org-latex-commands))
+               (car oxlc/org-latex-commands))))
         (funcall orig-fun texfile snippet))
     (funcall orig-fun texfile snippet)))
 ;; #+END_SRC

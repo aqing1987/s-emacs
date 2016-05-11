@@ -39,15 +39,23 @@ tex -version
 #+END_SRC
 Copyright 2015 D.E. Knuth.
 
-* install texworks
+* install texmaker
+http://www.xm1math.net/texmaker/download.html
+
 #+BEGIN_SRC sh
-sudo aptitude install texworks
+$ wget -c http://www.xm1math.net/texmaker/texmaker_ubuntu_14.04_4.5_amd64.deb
+
+sudo apt-get install ibus-qt4
+sudo dpkg -i texmaker_ubuntu_14.04_4.5_amd64.deb
 #+END_SRC
 
 * install chinese font wqy
 #+BEGIN_SRC sh
 sudo apt-get install ttf-wqy-*
 #+END_SRC
-* error fix
-** LaTeX Error: File `float.sty' not found.
-ls /usr/local/texlive/2015/texmf-dist/tex/latex/float
+
+check what chinese fonts supported in system
+#+BEGIN_SRC sh
+$ fc-list :lang=zh-cn
+#+END_SRC
+
