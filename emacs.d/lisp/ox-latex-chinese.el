@@ -6,7 +6,7 @@
 ;; Author: Feng Shu <tumashu@163.com>
 ;; URL: https://github.com/tumashu/ox-latex-chinese
 ;; Version: 0.0.1
-;; Package-Requires: ((emacs "24.4") (ebib "1.0") (chinese-pyim "0.1"))
+;; Package-Requires: ((emacs "24.4"))
 
 ;;; License:
 
@@ -111,6 +111,15 @@
 ;; (oxlc/toggle-ox-latex-chinese t)
 ;; #+END_EXAMPLE
 
+;; ** 设置 LaTeX 片断预览功能
+;; 1. 确保 emacs 可以显示 png 文件，具体参考：ftp://ftp.gnu.org/gnu/emacs/windows/README
+;; 2. 安装 [[http://www.imagemagick.org/][imagemagick]] 和 [[http://ghostscript.com/][ghostscript]]
+;; 3. 设置 emacs
+;;    #+BEGIN_EXAMPLE
+;;    ;; (setq org-latex-create-formula-image-program 'dvipng)   ;不支持中文
+;;    (setq org-latex-create-formula-image-program 'imagemagick) ;支持中文
+;;    #+END_EXAMPLE
+
 ;; ** 常见错误排查和解决
 ;; *** 缺少必要的 Latex 宏包
 ;; **** 表现形式
@@ -160,14 +169,6 @@
 ;;     tlmgr install wrapfig
 ;;     #+END_EXAMPLE
 ;;  2. 如果没有找到 “wrapfig” 宏包，你需要找到哪个宏包包含 wrapfig.sty，一个简单的方式就是用 google 搜索 wrapfig.sty，一般会有相关的信息。
-;; *** 无法预览 Latex 片断
-;; 1. 确保 emacs 可以显示 png 文件，具体参考：ftp://ftp.gnu.org/gnu/emacs/windows/README
-;; 2. 安装 [[http://www.imagemagick.org/][imagemagick]] 和 [[http://ghostscript.com/][ghostscript]]
-;; 3. 设置 emacs
-;; #+BEGIN_EXAMPLE
-;; ;; (setq org-latex-create-formula-image-program 'dvipng)   ;不支持中文
-;; (setq org-latex-create-formula-image-program 'imagemagick) ;支持中文
-;; #+END_EXAMPLE
 
 ;;; Code:
 ;; * 代码                                                          :code:
@@ -188,7 +189,7 @@ to latex."
   :group 'org-export-latex-chinese)
 
 (defcustom oxlc/org-latex-fonts
-  '((mainfont "Times New Roman")
+  '((mainfont "WenQuanYi Micro Hei")
     (CJKmainfont "WenQuanYi Zen Hei" "SimSun" "宋体" "新宋体" "宋体" "STSong" "STZhongson" "华文中宋")
     (CJKmainfont-italic "WenQuanYi Zen Hei" "KaiTi_GB2312" "楷体" "KaiTi" "楷体_GB2312" "STKaiti" "华文行楷")
     (CJKsansfont "WenQuanYi Micro Hei" "文泉驿微米黑" "文泉驿等宽微米黑" "微软雅黑"
@@ -277,27 +278,30 @@ org 不建议自定义 org-latex-default-package-alist 变量，但 'inputenc' a
 \\definecolor{mygreen}{rgb}{0,0.6,0}
 \\definecolor{mygray}{rgb}{0.5,0.5,0.5}
 \\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\\definecolor{backcolor}{rgb}{0.95,0.95,0.92}
 
 %%% https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
 \\lstset{ %
 alsolanguage=Java,
 alsolanguage=C,
-basicstyle=\\footnotesize,
+basicstyle=\\footnotesize\\ttfamily,
 tabsize=4,
 frame=single,
 breaklines=true,
 captionpos=b,
+showspaces=false,
 showstringspaces=false,
 showtabs=false,
 stepnumber=2,          
 numbers=left,          
 numbersep=5pt,
 numberstyle=\\tiny\\color{mygray},
-backgroundcolor=\\color{white},
+backgroundcolor=\\color{backcolor},
 commentstyle=\\color{mygreen},
 keywordstyle=\\color{blue},
 stringstyle=\\color{mymauve},
 }
+
 
 %%% 设置页面边距 %%%
 \\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry} %")
@@ -343,14 +347,14 @@ to latex."
         (cjkmainfont (oxlc/get-available-font 'CJKmainfont))
         (cjksansfont (oxlc/get-available-font 'CJKsansfont))
         (cjkmonofont (oxlc/get-available-font 'CJKmonofont)))
-    (concat
-     (when mainfont (format "\\setmainfont{%s}\n" mainfont))
-     (when cjkmainfont
-       (if cjkmainfont-italic
-           (format "\\setCJKmainfont[ItalicFont={%s}]{%s}\n" cjkmainfont-italic cjkmainfont)
-         (format "\\setCJKmainfont{%s}\n" cjkmainfont)))
-     (when cjksansfont (format "\\setCJKsansfont{%s}\n" cjksansfont))
-     (when cjkmonofont (format "\\setCJKmonofont{%s}\n" cjkmonofont)))))
+    (concat "\n"
+            (when mainfont (format "\\setmainfont{%s}\n" mainfont))
+            (when cjkmainfont
+              (if cjkmainfont-italic
+                  (format "\\setCJKmainfont[ItalicFont={%s}]{%s}\n" cjkmainfont-italic cjkmainfont)
+                (format "\\setCJKmainfont{%s}\n" cjkmainfont)))
+            (when cjksansfont (format "\\setCJKsansfont{%s}\n" cjksansfont))
+            (when cjkmonofont (format "\\setCJKmonofont{%s}\n" cjkmonofont)))))
 
 (defun oxlc/get-available-font (fontclass)
   (let* ((fonts-list (cdr (assoc fontclass oxlc/org-latex-fonts)))
@@ -366,9 +370,12 @@ to latex."
 (defun oxlc/font-available-p (fontname)
   (mapcar #'(lambda (x)
               (substring-no-properties x))
-          (cl-remove-if #'(lambda (x)
-                            (not (string-match-p (concat "^" fontname "$") x)))
-                        (font-family-list))))
+          (delq nil (mapcar
+                     #'(lambda (x)
+                         (when (or (string= fontname x)
+                                   (string= (string-as-unibyte fontname) x))
+                           fontname))
+                     (font-family-list)))))
 
 (defun oxlc/get-override-value (variable)
   "返回 `variable' 对应的 ox-latex-chinese 变量的取值。"
@@ -377,7 +384,8 @@ to latex."
 
 (defun oxlc/org-export-as (orig-fun backend &optional subtreep
                                     visible-only body-only ext-plist)
-  (if oxlc/ox-latex-chinese-enable
+  (if (and oxlc/ox-latex-chinese-enable
+           (member backend '(latex beamer)))
       (let ((org-latex-coding-system (oxlc/get-override-value 'org-latex-coding-system))
             (org-latex-commands (oxlc/get-override-value 'org-latex-commands))
             (org-latex-default-class (oxlc/get-override-value 'org-latex-default-class))
