@@ -24,3 +24,5 @@
 
 (define-key global-map [(meta f9)]  'cscope-display-buffer)
 
+;; === magit keys
+(global-set-key (kbd "C-x g") 'magit-status)

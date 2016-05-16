@@ -37,6 +37,7 @@
 	yasnippet
 	auto-complete
 	tabbar
+	magit
 	;; theme
 	monokai-theme
 	)  "Default packages")
@@ -123,6 +124,9 @@
      ))))  
 
 (setq tabbar-buffer-groups-function 'my-tabbar-buffer-groups)  
+
+;; === magit
+(require 'magit)
 
 ;; === theme
 (load-theme 'monokai t)

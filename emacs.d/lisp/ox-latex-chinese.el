@@ -274,6 +274,7 @@ org 不建议自定义 org-latex-default-package-alist 变量，但 'inputenc' a
 
 \\usepackage{listings}
 \\usepackage{color}
+\\usepackage{fix-cm} % Allows increasing the font size of specific fonts beyond LaTeX default specifications
 
 \\definecolor{mygreen}{rgb}{0,0.6,0}
 \\definecolor{mygray}{rgb}{0.5,0.5,0.5}
@@ -301,7 +302,6 @@ commentstyle=\\color{mygreen},
 keywordstyle=\\color{blue},
 stringstyle=\\color{mymauve},
 }
-
 
 %%% 设置页面边距 %%%
 \\usepackage[top=2.54cm, bottom=2.54cm, left=3.17cm, right=3.17cm]{geometry} %")

@@ -4,6 +4,9 @@
 (require 'ox-latex-chinese)
 (oxlc/toggle-ox-latex-chinese t)
 
+;; to show .png normally
+(setq org-latex-create-formula-image-program 'imagemagick) ;支持中文
+
 (setq org-src-fontify-natively t)
 
 
