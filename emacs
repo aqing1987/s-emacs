@@ -16,9 +16,6 @@
 (global-set-key "\C-cb" 'org-iswitchb)
 (setq org-log-done t)
 
-;; pdf output
-(setq org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
-                              "xelatex -interaction nonstopmode %f"))
 
 ;; font config like this in case run with "emacs -nw" will produce
 ;; fontset 'tty' does not exist bug.
@@ -46,77 +43,6 @@
 ;; =============================================================
 (add-to-list 'load-path "~/.emacs.d/lisp/php-mode")
 (require' php-mode)
-
-;; =============================================================
-;; === cscope
-;; =============================================================
-(require 'xcscope)
-
-;; 打开cscope时不更新，提高索引速度
-;(setq cscope-do-not-update-database t)
-
-
-;; =============================================================
-;; === cedet
-;; =============================================================
-(require 'cedet)
-(require 'semantic)
-
-;; Enable EDE (Project Management) features
-(global-ede-mode t)
-
-;; config semantic searching zone
-(setq semanticdb-project-roots
-      (list
-       (expand-file-name "/home/re-x/workspace")))
-
-
-;; =============================================================
-;; === ecb
-;; =============================================================
-(add-to-list 'load-path "~/.emacs.d/lisp/ecb")
-(require 'ecb)
-
-;(require 'ecb-autoloads)
-(setq stack-trace-on-error nil)
-(setq ecb-tip-of-the-day nil)
-
-;; switch between windows
-(global-set-key [M-left] 'windmove-left)
-(global-set-key [M-right] 'windmove-right)
-(global-set-key [M-up] 'windmove-up)
-(global-set-key [M-down] 'windmove-down)
-
-;; open and close
-(global-set-key [f12] 'ecb-activate)
-(global-set-key [M-f12] 'ecb-deactivate)
-
-;; =============================================================
-;; === yasnippet (put before auto-complete)
-;; =============================================================
-(add-to-list 'load-path "~/.emacs.d/lisp/yasnippet")
-(require 'yasnippet)
-(yas/global-mode 1)
-(yas/minor-mode-on) 
-
-;; =============================================================
-;; === auto-complete
-;; =============================================================
-(add-to-list 'load-path "~/.emacs.d/lisp/auto-complete/")
-(require 'auto-complete-config)
-(add-to-list 'ac-dictionary-directories
-			 "~/.emacs.d/lisp/auto-complete//ac-dict")
-(ac-config-default)
-
-(setq ac-use-quick-help nil)
-(setq ac-auto-start 4)
-(global-set-key "\M-/" 'auto-complete)
-;; show menu 0.8 seconds later
-(setq ac-auto-show-menu 0.8)
-(setq ac-use-menu-map t)
-(define-key ac-menu-map "\C-n" 'ac-next)
-(define-key ac-menu-map "\C-p" 'ac-previous)
-(setq ac-menu-height 12)
 
 ;; ;; =============================================================
 ;; ;; === common lisp process
@@ -192,9 +118,6 @@
 (setq-default cursor-type 'bar)
 
 
-(show-paren-mode t)
-(setq show-paren-style 'parentheses)
-
 (display-time-mode 1)
 (setq display-time-24hr-format t)
 (setq display-time-day-and-date t)
@@ -219,11 +142,6 @@
 (setq column-number-mode t)
 
 (setq visible-bell t)
-(setq inhibit-startup-message t)
-
-;; backup files control
-(setq make-backup-files nil)
-(setq-default make-backup-files nil)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
