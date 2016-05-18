@@ -1,0 +1,4 @@
+#+title: useful keys
+
+* how to go back last cursor position?
+C-x C-x
