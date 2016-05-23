@@ -38,6 +38,7 @@
 	auto-complete
 	tabbar
 	magit
+	php-mode
 	;; theme
 	monokai-theme
 	)  "Default packages")
@@ -116,6 +117,9 @@
 
 ;; === magit
 (require 'magit)
+
+;; === php
+(require 'php-mode)
 
 ;; === theme
 (load-theme 'monokai t)
