@@ -8,6 +8,7 @@
 ;; load els
 (let ((file-name-handler-alist nil))
   (require 'init-modeline)
+  (require 'cl-lib)
   (load "s-ui.el")
   (load "s-org.el")
   (load "s-code.el")
