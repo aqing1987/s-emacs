@@ -1,8 +1,7 @@
 Mastering Emacs is not the goal, it's the path.
 
-emacs is correspond to ~/.emacs
-emacs.d is conrrespond to ~/.emacs.d
-
 steps:
-1. copy emacs.d/init.el to ~/.emacs.d
-2. start emacs
+1. backup your ~/.emacs.d
+2. rm -rf ~/.emacs.d
+3. mv s-emacs .emacs.d
+4. start emacs
