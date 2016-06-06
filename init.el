@@ -11,11 +11,15 @@
   (require 'cl-lib)
   (require 'init-utils)
   (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
+  (require 'init-elpa)
   (load "s-ui.el")
   (load "s-org.el")
   (load "s-code.el")
-  (load "s-packages.el")
+  ;; (load "s-packages.el")
   (load "s-keybindings.el")
+
+  ;; setup color theme
+  (load-theme 'monokai t)
 
   (when (require 'time-date nil t)
 	(message "Emacs startup time: %d seconds."
