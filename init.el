@@ -10,6 +10,7 @@
   (require 'init-modeline)
   (require 'cl-lib)
   (require 'init-utils)
+  (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
   (load "s-ui.el")
   (load "s-org.el")
   (load "s-code.el")
