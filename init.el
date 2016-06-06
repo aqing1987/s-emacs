@@ -9,6 +9,7 @@
 (let ((file-name-handler-alist nil))
   (require 'init-modeline)
   (require 'cl-lib)
+  (require 'init-utils)
   (load "s-ui.el")
   (load "s-org.el")
   (load "s-code.el")
