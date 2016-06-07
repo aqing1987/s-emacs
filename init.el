@@ -34,6 +34,7 @@
   (require 'init-spelling)
   (require 'init-xterm)
   (require 'init-gui-frames)
+  (require 'init-ido)
   (require 'init-yasnippet)
   (load "s-org.el")
   (load "s-code.el")
