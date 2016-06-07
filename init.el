@@ -32,6 +32,7 @@
   (require 'init-frame-hooks)
   ;; any file use flyspell should be initialized after init-spelling
   (require 'init-spelling)
+  (require 'init-xterm)
   (require 'init-yasnippet)
   (load "s-ui.el")
   (load "s-org.el")
