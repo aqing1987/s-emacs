@@ -252,5 +252,9 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'define-word)
 (require-package 'quack) ;; for scheme
 (require-package 'hydra)
+(require-package 'php-mode)
+(require-package 'xcscope)
+(require-package 'ecb)
+(require-package 'tabbar)
 
 (provide 'init-elpa)
