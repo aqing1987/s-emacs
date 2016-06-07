@@ -12,6 +12,7 @@
   (require 'init-utils)
   (require 'init-site-lisp) ;; Must come before elpa, as it may provide package.el
   (require 'init-elpa)
+  (require 'init-frame-hooks)
   (require 'init-yasnippet)
   (load "s-ui.el")
   (load "s-org.el")
