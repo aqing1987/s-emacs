@@ -28,6 +28,7 @@
   ;; Must come before elpa, as it may provide package.el
   (require 'init-site-lisp) 
   (require 'init-elpa)
+  (require 'init-exec-path) ;; Set up $PATH
   (require 'init-frame-hooks)
   ;; any file use flyspell should be initialized after init-spelling
   (require 'init-spelling)
