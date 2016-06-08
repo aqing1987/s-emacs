@@ -35,6 +35,7 @@
   (require 'init-xterm)
   (require 'init-gui-frames)
   (require 'init-ido)
+  (require 'init-dired)
   (require 'init-yasnippet)
   (load "s-org.el")
   (load "s-code.el")
