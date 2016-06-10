@@ -46,6 +46,7 @@
   (require 'init-windows)
   (require 'init-sessions)
   (require 'init-markdown)
+  (require 'init-javascript)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
