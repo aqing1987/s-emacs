@@ -53,6 +53,7 @@
   (require 'init-lisp)
   (require 'init-elisp)
   (require 'init-yasnippet)
+  (require 'init-zencoding-mode)
   ;(load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
