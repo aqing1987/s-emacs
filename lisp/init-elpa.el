@@ -50,6 +50,7 @@ But you may use safer HTTPS instead.")
     textile-mode
     w3m
     company
+    company-statistics
     xcscope
     ecb
     yasnippet
@@ -247,6 +248,7 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'git-link)
 (require-package 'cliphist)
 (require-package 'yasnippet)
+(require-package 'company-statistics)
 (require-package 'company)
 (require-package 'company-c-headers)
 (require-package 'legalese)

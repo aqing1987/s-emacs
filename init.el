@@ -67,6 +67,7 @@
   (require 'init-web-mode)
   (require 'init-slime)
   (require 'init-clipboard)
+  (require 'init-company)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
