@@ -59,6 +59,7 @@
   (require 'init-gtags)
   (require 'init-sh)
   (require 'init-ctags)
+  (require 'init-bbdb)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
