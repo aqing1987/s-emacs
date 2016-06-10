@@ -45,6 +45,7 @@
   (require 'init-hippie-expand)
   (require 'init-windows)
   (require 'init-sessions)
+  (require 'init-markdown)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
