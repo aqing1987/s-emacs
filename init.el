@@ -43,6 +43,7 @@
   (require 'init-smex)
   (require 'init-ivy)
   (require 'init-hippie-expand)
+  (require 'init-windows)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
