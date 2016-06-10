@@ -64,6 +64,7 @@
   (require 'init-lua-mode)
   (require 'init-workgroups2)
   (require 'init-term-mode)
+  (require 'init-web-mode)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
