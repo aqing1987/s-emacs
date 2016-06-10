@@ -49,6 +49,7 @@
   (require 'init-javascript)
   (require 'init-org)
   (require 'init-org-mime)
+  (require 'init-css)
   ;(load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
