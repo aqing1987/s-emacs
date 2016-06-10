@@ -57,7 +57,7 @@
   (require 'init-cc-mode)
   (require 'init-gud)
   (require 'init-gtags)
-
+  (require 'init-sh)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
