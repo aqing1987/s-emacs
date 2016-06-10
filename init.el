@@ -40,6 +40,7 @@
   (require 'init-yasnippet)
   (require 'init-ibuffer)
   (require 'init-flymake)
+  (require 'init-smex)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")

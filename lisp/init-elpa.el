@@ -63,6 +63,7 @@ But you may use safer HTTPS instead.")
     magit
     php-mode
     company-c-headers
+	smex
     ;; make all the color theme packages available
     afternoon-theme
 	monokai-theme
@@ -266,5 +267,6 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'xcscope)
 (require-package 'ecb)
 (require-package 'tabbar)
+(require-package 'smex)
 
 (provide 'init-elpa)
