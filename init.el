@@ -42,6 +42,7 @@
   (require 'init-flymake)
   (require 'init-smex)
   (require 'init-ivy)
+  (require 'init-hippie-expand)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
