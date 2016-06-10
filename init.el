@@ -41,6 +41,7 @@
   (require 'init-ibuffer)
   (require 'init-flymake)
   (require 'init-smex)
+  (require 'init-ivy)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
