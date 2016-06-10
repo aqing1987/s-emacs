@@ -63,6 +63,7 @@
   (require 'init-gnus)
   (require 'init-lua-mode)
   (require 'init-workgroups2)
+  (require 'init-term-mode)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
