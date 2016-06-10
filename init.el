@@ -38,6 +38,7 @@
   (require 'init-dired)
   (require 'init-uniquify)
   (require 'init-yasnippet)
+  (require 'init-ibuffer)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
