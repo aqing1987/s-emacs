@@ -54,8 +54,9 @@
   (require 'init-elisp)
   (require 'init-yasnippet)
   (require 'init-zencoding-mode)
+  (require 'init-cc-mode)
   ;(load "s-org.el")
-  (load "s-code.el")
+  ;(load "s-code.el")
   ;; (load "s-packages.el")
   (load "s-keybindings.el")
 
