@@ -56,6 +56,8 @@
   (require 'init-zencoding-mode)
   (require 'init-cc-mode)
   (require 'init-gud)
+  (require 'init-gtags)
+
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
