@@ -55,6 +55,7 @@
   (require 'init-yasnippet)
   (require 'init-zencoding-mode)
   (require 'init-cc-mode)
+  (require 'init-gud)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
