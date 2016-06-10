@@ -49,14 +49,19 @@ But you may use safer HTTPS instead.")
     gitconfig-mode
     textile-mode
     w3m
-	company
-	xcscope
-	ecb
-	yasnippet
-	auto-complete
-	tabbar
-	magit
-	php-mode
+    company
+    xcscope
+    ecb
+    yasnippet
+    auto-complete
+    tabbar
+    async
+    dash
+    with-editor
+    git-commit
+    magit-popup
+    magit
+    php-mode
     company-c-headers
     ;; make all the color theme packages available
     afternoon-theme
@@ -156,6 +161,7 @@ ARCHIVE is the string name of the package archive.")
 
 (require-package 'dash) ; required by string-edit
 (require-package 'color-theme) ; color-theme 6.6.1 in elpa is buggy
+(require-package 'monokai-theme)
 (require-package 'auto-compile)
 (require-package 'avy)
 (require-package 'expand-region) ;; I prefer stable version
@@ -246,6 +252,10 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'simple-httpd)
 (require-package 'git-messenger)
 (require-package 'git-gutter)
+(require-package 'async)
+(require-package 'with-editor)
+(require-package 'git-commit)
+(require-package 'magit-popup)
 (require-package 'magit)
 (require-package 'flx-ido)
 (require-package 'neotree)
