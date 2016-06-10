@@ -39,6 +39,7 @@
   (require 'init-uniquify)
   (require 'init-yasnippet)
   (require 'init-ibuffer)
+  (require 'init-flymake)
   (load "s-org.el")
   (load "s-code.el")
   ;; (load "s-packages.el")
