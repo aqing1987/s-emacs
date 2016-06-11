@@ -86,6 +86,7 @@
   (require 'init-misc-lazy)
   (require 'init-which-func)
   (require 'init-fonts)
+  (require 'init-hs-minor-mode)
   ;; (load "s-org.el")
   ;; (load "s-code.el")
   ;; (load "s-packages.el")
