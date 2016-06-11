@@ -92,6 +92,7 @@
   (require 'init-writting)
   (require 'init-doxygen)
   (require 'init-pomodoro)
+  (require 'init-emacspeak)
   ;; (load "s-org.el")
   ;; (load "s-code.el")
   ;; (load "s-packages.el")
