@@ -66,6 +66,7 @@ But you may use safer HTTPS instead.")
     company-c-headers
     smex
     keyfreq
+    browse-kill-ring
     ;; make all the color theme packages available
     afternoon-theme
     monokai-theme
@@ -272,5 +273,6 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'tabbar)
 (require-package 'smex)
 (require-package 'keyfreq)
+(require-package 'browse-kill-ring)
 
 (provide 'init-elpa)

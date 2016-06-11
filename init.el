@@ -70,6 +70,11 @@
   (require 'init-company)
   (require 'init-keyfreq)
   (require 'init-httpd)
+
+  ;; misc has some crucial tools I need immediately
+  (require 'init-misc)
+
+  
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
