@@ -91,6 +91,7 @@
   (require 'init-csv)
   (require 'init-writting)
   (require 'init-doxygen)
+  (require 'init-pomodoro)
   ;; (load "s-org.el")
   ;; (load "s-code.el")
   ;; (load "s-packages.el")
