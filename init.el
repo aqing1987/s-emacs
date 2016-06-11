@@ -75,6 +75,7 @@
   (require 'init-misc)
 
   (require 'init-emacs-w3m)
+  (require 'init-hydra)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
