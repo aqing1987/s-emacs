@@ -68,6 +68,7 @@
   (require 'init-slime)
   (require 'init-clipboard)
   (require 'init-company)
+  (require 'init-keyfreq)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")

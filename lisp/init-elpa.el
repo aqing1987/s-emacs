@@ -64,10 +64,11 @@ But you may use safer HTTPS instead.")
     magit
     php-mode
     company-c-headers
-	smex
+    smex
+    keyfreq
     ;; make all the color theme packages available
     afternoon-theme
-	monokai-theme
+    monokai-theme
     heroku-theme)
   "Don't install any Melpa packages except these packages")
 
@@ -270,5 +271,6 @@ ARCHIVE is the string name of the package archive.")
 (require-package 'ecb)
 (require-package 'tabbar)
 (require-package 'smex)
+(require-package 'keyfreq)
 
 (provide 'init-elpa)
