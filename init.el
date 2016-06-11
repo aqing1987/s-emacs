@@ -87,6 +87,7 @@
   (require 'init-which-func)
   (require 'init-fonts)
   (require 'init-hs-minor-mode)
+  (require 'init-textile)
   ;; (load "s-org.el")
   ;; (load "s-code.el")
   ;; (load "s-packages.el")
