@@ -99,8 +99,14 @@
   ;; (load "s-packages.el")
   (load "s-keybindings.el")
 
-
   (when (require 'time-date nil t)
 	(message "Emacs startup time: %d seconds."
 			 (time-to-seconds (time-since emacs-load-start-time))))
+
+  ;;----------------------------------------------------------------------------
+  ;; Locales (setting them earlier in this file doesn't work in X)
+  ;;----------------------------------------------------------------------------
+  (require 'init-locales)
+
   )
+
