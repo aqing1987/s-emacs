@@ -90,6 +90,7 @@
   (require 'init-textile)
   (require 'init-csv)
   (require 'init-writting)
+  (require 'init-doxygen)
   ;; (load "s-org.el")
   ;; (load "s-code.el")
   ;; (load "s-packages.el")
