@@ -74,15 +74,19 @@
   ;; misc has some crucial tools I need immediately
   (require 'init-misc)
 
+  ;; setup color theme
+  ;; comment below line if you want to setup color theme in your own way
+  (if (or (display-graphic-p)
+          (string-match-p "256color"(getenv "TERM")))
+      (load-theme 'monokai t))
+
   (require 'init-emacs-w3m)
   (require 'init-hydra)
-  ;(load "s-org.el")
-  ;(load "s-code.el")
+  ;; (load "s-org.el")
+  ;; (load "s-code.el")
   ;; (load "s-packages.el")
   (load "s-keybindings.el")
 
-  ;; setup color theme
-  (load-theme 'monokai t)
 
   (when (require 'time-date nil t)
 	(message "Emacs startup time: %d seconds."
