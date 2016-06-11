@@ -84,6 +84,7 @@
   (require 'init-hydra)
 
   (require 'init-misc-lazy)
+  (require 'init-which-func)
   ;; (load "s-org.el")
   ;; (load "s-code.el")
   ;; (load "s-packages.el")
