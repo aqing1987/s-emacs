@@ -74,7 +74,7 @@
   ;; misc has some crucial tools I need immediately
   (require 'init-misc)
 
-  
+  (require 'init-emacs-w3m)
   ;(load "s-org.el")
   ;(load "s-code.el")
   ;; (load "s-packages.el")
