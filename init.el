@@ -58,6 +58,7 @@
   (require 'init-gud)
   (require 'init-gtags)
   (require 'init-sh)
+  (require 'init-cscope)
   (require 'init-ctags)
   (require 'init-bbdb)
   (require 'init-gnus)
