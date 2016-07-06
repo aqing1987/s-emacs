@@ -48,6 +48,7 @@
   (require 'init-javascript)
   (require 'init-org)
   (require 'init-org-mime)
+  (require 'init-sorg)
   (require 'init-css)
   (require 'init-python-mode)
   (require 'init-lisp)
@@ -95,7 +96,7 @@
   (require 'init-pomodoro)
   (require 'init-emacspeak)
   (require 'init-artbollocks-mode)
-  ;; (load "s-org.el")
+  
   ;; (load "s-code.el")
   ;; (load "s-packages.el")
   (load "s-keybindings.el")

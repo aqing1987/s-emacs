@@ -52,3 +52,5 @@
   )
 
 (global-set-key (kbd "M-p") 's-screenshot)
+
+(provide 'init-sorg)
