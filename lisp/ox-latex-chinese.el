@@ -333,10 +333,10 @@ to latex."
   (setq oxlc/ox-latex-chinese-enable
         (or force-enable (not oxlc/ox-latex-chinese-enable)))
   (if oxlc/ox-latex-chinese-enable
-      (progn (message "已经启用 ox-latex-chinese！")
+      (progn (message "ox-latex-chinese enabled")
              (advice-add 'org-export-as :around #'oxlc/org-export-as)
              (advice-add 'org-latex-compile :around #'oxlc/org-latex-compile))
-    (message "已经禁用 ox-latex-chinese！")
+    (message "ox-latex-chinese disabled")
     (advice-remove 'org-export-as #'oxlc/org-export-as)
     (advice-remove 'org-latex-compile #'oxlc/org-latex-compile)))
 
