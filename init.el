@@ -55,7 +55,7 @@
   (require 'init-elisp)
   (require 'init-yasnippet)
   (require 'init-zencoding-mode)
-  (require 'init-cc-mode)
+  (require 'google-c-style)
   (require 'init-gud)
   (require 'init-gtags)
   (require 'init-sh)
@@ -72,6 +72,7 @@
   (require 'init-company)
   (require 'init-keyfreq)
   (require 'init-httpd)
+  (require 'init-elpy)
 
   ;; misc has some crucial tools I need immediately
   (require 'init-misc)
@@ -96,9 +97,7 @@
   (require 'init-pomodoro)
   (require 'init-emacspeak)
   (require 'init-artbollocks-mode)
-  
-  ;; (load "s-code.el")
-  ;; (load "s-packages.el")
+
   (load "s-keybindings.el")
 
   (when (require 'time-date nil t)
