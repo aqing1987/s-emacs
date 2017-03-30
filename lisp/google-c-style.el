@@ -147,6 +147,11 @@ Suitable for inclusion in `c-offsets-alist'."
   (define-key c-mode-base-map "\C-m" 'newline-and-indent)
   (define-key c-mode-base-map [ret] 'newline-and-indent))
 
+(defun cpplint ()
+  "check source code format according to Google Style Guide"
+  (interactive)
+  (compilation-start (concat "python ~/bin/cpplint.py " (buffer-file-name))))
+
 (add-hook 'c-mode-common-hook 'google-set-c-style)
 (add-hook 'c-mode-common-hook 'google-make-newline-indent)
 
