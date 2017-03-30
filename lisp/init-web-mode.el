@@ -1,9 +1,5 @@
-(autoload 'web-mode "web-mode")
+(require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.cmp\\'" . web-mode)) ; salesforce
-(add-to-list 'auto-mode-alist '("\\.app\\'" . web-mode)) ; salesforce
-(add-to-list 'auto-mode-alist '("\\.page\\'" . web-mode)) ; salesforce
-(add-to-list 'auto-mode-alist '("\\.component\\'" . web-mode)) ; salesforce
 (add-to-list 'auto-mode-alist '("\\.wp\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.tmpl\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.php\\'" . web-mode))
@@ -23,18 +19,19 @@
 (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
 
 (defun flymake-html-init ()
-       (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                          'flymake-create-temp-inplace))
-              (local-file (file-relative-name
-                           temp-file
-                           (file-name-directory buffer-file-name))))
-         (list "tidy" (list local-file))))
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    (list "tidy" (list local-file))))
 
 (defun flymake-html-load ()
   (interactive)
   (when (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
     (set (make-local-variable 'flymake-allowed-file-name-masks)
-         '(("\\.html\\|\\.ctp\\|\\.ftl\\|\\.jsp\\|\\.php\\|\\.erb\\|\\.rhtml" flymake-html-init))
+         '(("\\.html\\|\\.ctp\\|\\.ftl\\|\\.jsp\\|\\.php\\|\\.erb\\|\\.rhtml"
+            flymake-html-init))
          )
     (set (make-local-variable 'flymake-err-line-patterns)
          ;; only validate missing html tags
@@ -42,10 +39,21 @@
     (flymake-mode 1)))
 
 (defun web-mode-hook-setup ()
+  "Hooks for Web mode."
   (unless (is-buffer-file-temp)
     (flymake-html-load)
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2)
     (enable-flyspell-mode-conditionally)
     (setq flyspell-check-doublon nil)
+    (local-set-key (kbd "RET") 'newline-and-indent)
+    (setq web-mode-enable-current-element-highlight t)
+    (setq web-mode-enable-current-column-highlight t)
+    (setq web-mode-comment-style 2)
+    (setq web-mode-style-padding 1)
+    (setq web-mode-script-padding 1)
+    (setq web-mode-block-padding 0)
     (remove-hook 'yas-after-exit-snippet-hook
                  'web-mode-yasnippet-exit-hook t)
     (remove-hook 'yas/after-exit-snippet-hook
@@ -61,6 +69,7 @@
      (setq web-mode-enable-auto-closing t) ; enable auto close tag in text-mode
      (setq web-mode-enable-auto-pairing t)
      (setq web-mode-enable-css-colorization t)
+     (setq web-mode-enable-comment-keywords t)
      (setq web-mode-imenu-regexp-list
            '(("<\\(h[1-9]\\)\\([^>]*\\)>\\([^<]*\\)" 1 3 ">" nil)
              ("^[ \t]*<\\([@a-z]+\\)[^>]*>? *$" 1 " id=\"\\([a-zA-Z0-9_]+\\)\"" "#" ">")
