@@ -5,7 +5,7 @@
 (oxlc/toggle-ox-latex-chinese t)
 
 ;; to show .png normally
-(setq org-latex-create-formula-image-program 'imagemagick) ;支持中文
+(setq org-latex-create-formula-image-program 'imagemagick)
 
 (setq org-src-fontify-natively t)
 
@@ -18,7 +18,7 @@
 ;; set agenda directory
 (setq org-agenda-files '("~/org"))
 
-;; set org-agenda 
+;; set org-agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
 
 ;; disable `validate'
@@ -32,7 +32,6 @@
 
 ;; disable time stamp
 (setq org-export-time-stamp-file nil)
-
 
 
 ;; === screenshot in org-mode

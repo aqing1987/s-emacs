@@ -56,8 +56,6 @@
   (require 'init-sessions)
   (require 'init-markdown)
   (require 'init-javascript)
-  (require 'init-org)
-  (require 'init-org-mime)
   (require 'init-sorg)
   (require 'init-css)
   (require 'init-python-mode)
