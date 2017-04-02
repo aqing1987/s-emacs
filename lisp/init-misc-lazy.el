@@ -12,9 +12,9 @@
 
 (autoload 'find-by-pinyin-dired "find-by-pinyin-dired" "" t)
 
-;;----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; Don't disable narrowing commands
-;;----------------------------------------------------------------------------
+
 (put 'narrow-to-region 'disabled nil)
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-defun 'disabled nil)
@@ -25,19 +25,18 @@
 
 (autoload 'sos "sos" "search stackoverflow" t)
 
-;;----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; Fix per-window memory of buffer point positions
-;;----------------------------------------------------------------------------
+
 (global-pointback-mode)
 ;; pointback-mode make it harder to insert latex macro
-;; @see https://github.com/redguardtoo/emacs.d/issues/307#issuecomment-212582241
 (add-hook 'LaTeX-mode-hook
   (lambda ()
     (pointback-mode -1)))
 
-;;----------------------------------------------------------------------------
+;; ----------------------------------------------------------------------------
 ;; Page break lines
-;;----------------------------------------------------------------------------
+
 (global-page-break-lines-mode)
 
 (column-number-mode 1)
@@ -58,10 +57,8 @@
       kept-old-versions 2)
 
 ;; Donot make backups of files, not safe
-;; @see https://github.com/joedicastro/dotfiles/tree/master/emacs
 (setq vc-make-backup-files nil)
 
-;; I'm in Australia now, so I set the locale to "en_AU"
 (defun insert-date (prefix)
     "Insert the current date. With prefix-argument, use ISO format. With
    two prefix arguments, write out the day and month name."
@@ -78,7 +75,6 @@
   "length of a region"
   (interactive)
   (message (format "%d" (- (region-end) (region-beginning)))))
-
 
 ;; {{ imenu tweakment
 (defvar rimenu-position-pair nil "positions before and after imenu jump")
@@ -107,8 +103,10 @@
 (defun open-blog-on-current-month ()
   (interactive)
   (let (blog)
-   (setq blog (file-truename (concat "~/blog/" (format-time-string "%Y-%m") ".org")) )
-   (find-file blog)))
+    (setq
+     blog
+     (file-truename (concat "~/blog/" (format-time-string "%Y-%m") ".org")))
+    (find-file blog)))
 
 (defun insert-blog-version ()
   "insert version of my blog post"
@@ -511,11 +509,10 @@ Including indent-buffer, which should not be called automatically on save."
 (safe-wrap
  (when (file-writable-p (file-truename "~/.emacs.d/history"))
    (setq history-length 8000)
-   (setq savehist-additional-variables '(search-ring regexp-search-ring kill-ring))
-   (savehist-mode 1))
- (message "Failed to access ~/.emacs.d/history"))
+   (setq savehist-additional-variables
+         '(search-ring regexp-search-ring kill-ring))
+   (savehist-mode 1)))
 ;; }}
 
 (provide 'init-misc-lazy)
 ;;; init-misc-lazy.el ends here
-
