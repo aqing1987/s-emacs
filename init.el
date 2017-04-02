@@ -113,9 +113,8 @@
 	(message "Emacs startup time: %d seconds."
 			 (time-to-seconds (time-since emacs-load-start-time))))
 
-  ;;----------------------------------------------------------------------------
+  ;; --------------------------------------------------------------------------
   ;; Locales (setting them earlier in this file doesn't work in X)
-  ;;----------------------------------------------------------------------------
   (require 'init-locales)
 
   ;; my personal setup, other major-mode specific setup need it.
