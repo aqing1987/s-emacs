@@ -111,6 +111,10 @@
 
   )
 
+;; disable emacs making changes, and keep the settings in a separate file
+(setq custom-file (concat user-emacs-directory "custom-set-variables.el"))
+(load custom-file 'noerror)
+
 (setq gc-cons-threshold best-gc-cons-threshold)
 ;;; Local Variables:
 ;;; no-byte-compile: t
