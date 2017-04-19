@@ -102,7 +102,6 @@
   (require 'init-writting)
   (require 'init-doxygen)
   (require 'init-pomodoro)
-  (require 'init-emacspeak)
   (require 'init-artbollocks-mode)
 
   (load "s-keybindings.el")
