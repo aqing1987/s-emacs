@@ -1,10 +1,5 @@
 (require 'package)
 
-;; You can set it to `t' to use safer HTTPS to download packages
-(defvar melpa-use-https-repo t
-  "By default, HTTP is used to download packages.
-But you may use safer HTTPS instead.")
-
 ;; List of VISIBLE packages from melpa-unstable (http://melpa.org)
 ;; Feel free to add more packages!
 (defvar melpa-include-packages
@@ -73,31 +68,12 @@ But you may use safer HTTPS instead.")
     heroku-theme)
   "Don't install any Melpa packages except these packages")
 
-;; We include the org repository for completeness, but don't use it.
-;; Lock org-mode temporarily:
-;; (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
-(if melpa-use-https-repo
-    (setq package-archives
-          '(;; uncomment below line if you need use GNU ELPA
-            ("gnu"          . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-            ("melpa"        . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-            ("melpa-stable" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
-            ("org"          . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
-  (setq package-archives
-        '(;; uncomment below line if you need use GNU ELPA
-          ;; ("gnu" . "http://elpa.gnu.org/packages/")
-		  ("melpa" . "http://elpa.zilongshanren.com/melpa/")))
-          ;;("melpa" . "http://melpa.org/packages/")
-          ;; ("melpa-stable" . "http://stable.melpa.org/packages/")))
-  )
-
-;; Un-comment below line if your extract https://github.com/redguardtoo/myelpa/archive/master.zip into ~/myelpa/
-;; (setq package-archives '(("myelpa" . "~/myelpa")))
-
-;; Or Un-comment below line if you install package from https://github.com/redguardtoo/myelpa/
-;; (setq package-archives '(("myelpa" . "https://raw.github.com/redguardtoo/myelpa/master/")))
-
-
+(setq package-archives
+      '(("gnu"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+        ("melpa-stable" .
+         "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
+        ("org"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
 ;;------------------------------------------------------------------------------
 ;; Internal implementation, newbies should NOT touch code below this line!
