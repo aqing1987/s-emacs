@@ -111,12 +111,7 @@
 
   ;; --------------------------------------------------------------------------
   ;; Locales (setting them earlier in this file doesn't work in X)
-  (require 'init-locales)
-
-  ;; my personal setup, other major-mode specific setup need it.
-  ;; It's dependent on init-site-lisp.el
-  (if (file-exists-p "~/.custom.el") (load-file "~/.custom.el"))
-  )
+  (require 'init-locales))
 
 (setq gc-cons-threshold best-gc-cons-threshold)
 ;;; Local Variables:
