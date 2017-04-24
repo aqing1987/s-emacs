@@ -39,10 +39,8 @@
   (require 'init-site-lisp)
   (require 'init-elpa)
   (require 'init-exec-path) ;; Set up $PATH
-  (require 'init-frame-hooks)
   ;; any file use flyspell should be initialized after init-spelling
   (require 'init-spelling)
-  (require 'init-xterm)
   (require 'init-gui-frames)
   (require 'init-ido)
   (require 'init-dired)

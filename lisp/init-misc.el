@@ -69,11 +69,11 @@
               set-mark-command-repeat-pop t
               tooltip-delay 1.5
               ;; void problems with crontabs, etc.
-              ;; require-final-newline t ; bad idea, could accidentally edit others' code
+              ;; require-final-newline t ; bad idea, could accidentally
+              ;; edit others' code
               truncate-lines nil
               truncate-partial-width-windows nil
               ;; visible-bell has some issue
-              ;; @see https://github.com/redguardtoo/mastering-emacs-in-one-year-guide/issues/9#issuecomment-97848938
               visible-bell nil)
 
 ;; @see http://www.emacswiki.org/emacs/SavePlace
@@ -106,20 +106,25 @@
   "Grep file at project root directory or current directory"
   (interactive)
   (let ((keyword (if (region-active-p)
-                     (buffer-substring-no-properties (region-beginning) (region-end))
+                     (buffer-substring-no-properties
+                      (region-beginning) (region-end))
                    (read-string "Enter grep pattern: ")))
         cmd collection val 1st root)
 
-    (let ((default-directory (setq root (or (and (fboundp 'ffip-get-project-root-directory)
-                                                 (ffip-get-project-root-directory))
-                                            default-directory))))
+    (let ((default-directory
+            (setq root (or (and (fboundp 'ffip-get-project-root-directory)
+                                (ffip-get-project-root-directory))
+                           default-directory))))
       (setq cmd (format "%s -rsn %s \"%s\" *"
                         grep-program my-grep-extra-opts keyword))
       (when (and (setq collection (split-string
                                    (shell-command-to-string cmd)
                                    "\n"
                                    t))
-                 (setq val (ivy-read (format "matching \"%s\" at %s:" keyword root) collection))))
+                 (setq val
+                       (ivy-read
+                        (format "matching \"%s\" at %s:"
+                                keyword root) collection))))
       (setq lst (split-string val ":"))
       (find-file (car lst))
       (goto-char (point-min))
@@ -127,8 +132,8 @@
 ;; }}
 
 ;; {{ groovy-mode
- (add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
- (add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.groovy\\'" . groovy-mode))
+(add-to-list 'auto-mode-alist '("\\.gradle\\'" . groovy-mode))
 ;; }}
 
 ;; {{ https://github.com/browse-kill-ring/browse-kill-ring
@@ -151,8 +156,8 @@
   (let ((root-dir (locate-dominating-file default-directory
                                           "build.gradle")))
     (if root-dir
-      (let ((default-directory root-dir))
-        (shell-command (concat "gradle " cmd "&"))))
+        (let ((default-directory root-dir))
+          (shell-command (concat "gradle " cmd "&"))))
     ))
 ;; }}
 
@@ -174,9 +179,10 @@
 (autoload 'dictionary-new-search "dictionary" "" t nil)
 (defun my-lookup-dict-org ()
   (interactive)
-  (dictionary-new-search (cons (if (region-active-p)
-                                   (buffer-substring-no-properties (region-beginning) (region-end))
-                                 (thing-at-point 'symbol)) dictionary-default-dictionary)))
+  (dictionary-new-search
+   (cons (if (region-active-p)
+             (buffer-substring-no-properties (region-beginning) (region-end))
+           (thing-at-point 'symbol)) dictionary-default-dictionary)))
 
 ;; }}
 
@@ -192,7 +198,8 @@
 
 (defun my-gud-gdb ()
   (interactive)
-  (gud-gdb (concat "gdb --fullname \"" (cppcm-get-exe-path-current-buffer) "\"")))
+  (gud-gdb (concat "gdb --fullname \""
+                   (cppcm-get-exe-path-current-buffer) "\"")))
 
 (defun my-overview-of-current-buffer ()
   (interactive)
@@ -201,16 +208,19 @@
 (defun lookup-doc-in-man ()
   (interactive)
   (man (concat "-k " (if (region-active-p)
-       (buffer-substring-no-properties (region-beginning) (region-end))
-      (thing-at-point 'symbol)))))
+                         (buffer-substring-no-properties
+                          (region-beginning) (region-end))
+                       (thing-at-point 'symbol)))))
 
-;; @see http://blog.binchen.org/posts/effective-code-navigation-for-web-development.html
 ;; don't let the cursor go into minibuffer prompt
-(setq minibuffer-prompt-properties (quote (read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt)))
+(setq minibuffer-prompt-properties
+      (quote (read-only t point-entered minibuffer-avoid-prompt
+                        face minibuffer-prompt)))
 
 ;; Don't echo passwords when communicating with interactive programs:
 ;; Github prompt is like "Password for 'https://user@github.com/':"
-(setq comint-password-prompt-regexp (format "%s\\|^ *Password for .*: *$" comint-password-prompt-regexp))
+(setq comint-password-prompt-regexp
+      (format "%s\\|^ *Password for .*: *$" comint-password-prompt-regexp))
 (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
 
 ;; {{ which-key-mode
@@ -221,13 +231,15 @@
 
 (defun generic-prog-mode-hook-setup ()
   (unless (is-buffer-file-temp)
-    ;; fic-mode has performance issue on 5000 line C++, we can always use swiper instead
+    ;; fic-mode has performance issue on 5000 line C++, we can always use
+    ;; swiper instead
     ;; don't spell check double words
     (setq flyspell-check-doublon nil)
     ;; enable for all programming modes
     ;; http://emacsredux.com/blog/2013/04/21/camelcase-aware-editing/
     (subword-mode)
-    (setq-default electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
+    (setq-default electric-pair-inhibit-predicate
+                  'electric-pair-conservative-inhibit)
     (electric-pair-mode 1)
 
     ;; eldoc, show API doc in minibuffer echo area
@@ -255,7 +267,6 @@
 (global-set-key (kbd "C-c q") 'auto-fill-mode)
 
 ;; some project prefer tab, so be it
-;; @see http://stackoverflow.com/questions/69934/set-4-space-indent-in-emacs-in-text-mode
 (setq-default tab-width 4)
 
 (setq history-delete-duplicates t)
@@ -266,7 +277,6 @@
 ;; NO automatic new line when scrolling down at buffer bottom
 (setq next-line-add-newlines nil)
 
-;; @see http://stackoverflow.com/questions/4222183/emacs-how-to-jump-to-function-definition-in-el-file
 (global-set-key (kbd "C-h C-f") 'find-function)
 
 ;; from RobinH, Time management
@@ -324,7 +334,8 @@ See \"Reusing passwords for several connections\" from INFO.
 ;; }}
 
 ;; edit confluence wiki
-(autoload 'confluence-edit-mode "confluence-edit" "enable confluence-edit-mode" t)
+(autoload 'confluence-edit-mode
+  "confluence-edit" "enable confluence-edit-mode" t)
 (add-to-list 'auto-mode-alist '("\\.wiki\\'" . confluence-edit-mode))
 
 (defun erase-specific-buffer (num buf-name)
@@ -396,7 +407,6 @@ See \"Reusing passwords for several connections\" from INFO.
 (defun toggle-full-window()
   "Toggle the full view of selected window"
   (interactive)
-  ;; @see http://www.gnu.org/software/emacs/manual/html_node/elisp/Splitting-Windows.html
   (if (window-parent)
       (delete-other-windows)
     (winner-undo)
@@ -430,7 +440,6 @@ See \"Reusing passwords for several connections\" from INFO.
                         "/GRAGS$"
                         "/GPATH$"
                         ;; ~/.emacs.d/**/*.el included
-                        ;; "/home/[a-z]\+/\\.[a-df-z]" ; configuration file should not be excluded
                         ))
 ;; }}
 
@@ -440,7 +449,6 @@ See \"Reusing passwords for several connections\" from INFO.
 
 (defun my-which-function ()
   ;; clean the imenu cache
-  ;; @see http://stackoverflow.com/questions/13426564/how-to-force-a-rescan-in-imenu-by-a-function
   (setq imenu--index-alist nil)
   (which-function))
 
@@ -460,8 +468,9 @@ See \"Reusing passwords for several connections\" from INFO.
 
 (defun mpc-next-prev-song (&optional prev)
   (interactive)
-  (message (car (split-string (shell-command-to-string
-                               (concat "mpc " (if prev "prev" "next"))) "\n+"))))
+  (message (car (split-string
+                 (shell-command-to-string
+                  (concat "mpc " (if prev "prev" "next"))) "\n+"))))
 (defun lyrics()
   "Prints the lyrics for the current song"
   (interactive)
@@ -488,12 +497,13 @@ See \"Reusing passwords for several connections\" from INFO.
 
 ;; {{ move focus between sub-windows
 (require 'window-numbering)
-(custom-set-faces '(window-numbering-face ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold)))))
+(custom-set-faces
+ '(window-numbering-face
+   ((t (:foreground "DeepPink" :underline "DeepPink" :weight bold)))))
 (window-numbering-mode 1)
 ;; }}
 
 ;; {{ avy, jump between texts, like easymotion in vim
-;; @see http://emacsredux.com/blog/2015/07/19/ace-jump-mode-is-dead-long-live-avy/ for more tips
 ;; dired
 (eval-after-load "dired"
   '(progn
@@ -501,7 +511,6 @@ See \"Reusing passwords for several connections\" from INFO.
 ;; }}
 
 ;; ANSI-escape coloring in compilation-mode
-;; {{ http://stackoverflow.com/questions/13397737/ansi-coloring-in-compilation-mode
 (ignore-errors
   (require 'ansi-color)
   (defun my-colorize-compilation-buffer ()
@@ -510,7 +519,6 @@ See \"Reusing passwords for several connections\" from INFO.
   (add-hook 'compilation-filter-hook 'my-colorize-compilation-buffer))
 ;; }}
 
-;; @see http://emacs.stackexchange.com/questions/14129/which-keyboard-shortcut-to-use-for-navigating-out-of-a-string
 (defun font-face-is-similar (f1 f2)
   (let (rlt)
     ;; (message "f1=%s f2=%s" f1 f2)
@@ -522,7 +530,8 @@ See \"Reusing passwords for several connections\" from INFO.
     (if (eq f1 f2) (setq rlt t)
       ;; C++ comment has different font face for limit and content
       ;; f1 or f2 could be a function object because of rainbow mode
-      (if (and (string-match "-comment-" (format "%s" f1)) (string-match "-comment-" (format "%s" f2)))
+      (if (and (string-match "-comment-" (format "%s" f1))
+               (string-match "-comment-" (format "%s" f2)))
           (setq rlt t)))
     rlt))
 
@@ -530,15 +539,11 @@ See \"Reusing passwords for several connections\" from INFO.
 (add-to-list 'backup-directory-alist
              (cons tramp-file-name-regexp nil))
 (setq tramp-chunksize 8192)
-
-;; @see https://github.com/syl20bnr/spacemacs/issues/1921
-;; If you tramp is hanging, you can uncomment below line.
-;; (setq tramp-ssh-controlmaster-options "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
 ;; }}
 
 ;; {{
 (defun goto-edge-by-comparing-font-face (&optional step)
-"Goto either the begin or end of string/comment/whatever.
+  "Goto either the begin or end of string/comment/whatever.
 If step is -1, go backward."
   (interactive "P")
   (let ((cf (get-text-property (point) 'face))
@@ -570,15 +575,15 @@ If step is -1, go backward."
   (conditionally-paredit-mode -1)
   (setq gc-cons-threshold best-gc-cons-threshold))
 
-;; @see http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
 (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
 (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
-
 
 ;; {{ string-edit-mode
 (autoload 'string-edit-at-point "string-edit" "" t nil)
 (defun string-edit-at-point-hook-setup ()
-  (let ((major-mode-list (remove major-mode '(web-mode js2-mode js-mode css-mode emacs-lisp-mode)))
+  (let ((major-mode-list
+         (remove major-mode
+                 '(web-mode js2-mode js-mode css-mode emacs-lisp-mode)))
         (str (buffer-substring-no-properties (point-min) (point-max))))
     ;; (ivy-read "directories:" collection :action 'dired)
     ;; (message "original=%s" (se/find-original))
@@ -608,8 +613,6 @@ If step is -1, go backward."
     ;; select lines
     (save-excursion
       ;; Another workaround for evil-visual-line bug:
-      ;; In evil-mode, if we use hotkey V or `M-x evil-visual-line` to select line,
-      ;; the (line-beginning-position) of the line which is after the last selected
       ;; line is always (region-end)! Don't know why.
       (if (and (> e b)
                (save-excursion (goto-char e) (= e (line-beginning-position)))
@@ -628,29 +631,35 @@ If step is -1, go backward."
   (when (region-active-p)
     (let (tmp buf)
       ;; select lines
-      (setq tmp (diff-region-format-region-boundary (region-beginning) (region-end)))
+      (setq tmp (diff-region-format-region-boundary
+                 (region-beginning) (region-end)))
       (setq buf (get-buffer-create "*Diff-regionA*"))
       (save-current-buffer
         (set-buffer buf)
         (erase-buffer))
       (append-to-buffer buf (car tmp) (cadr tmp))))
-  (message "Now select other region to compare and run `diff-region-compare-with-b`"))
+  (message "Now select other region to compare and run
+`diff-region-compare-with-b`"))
 
 (defun diff-region-compare-with-b ()
-  "Compare current region with region selected by `diff-region-tag-selected-as-a' "
+  "Compare current region with region selected by
+`diff-region-tag-selected-as-a' "
   (interactive)
   (if (region-active-p)
       (let (rlt-buf
             diff-output
-            (fa (make-temp-file (expand-file-name "scor"
-                                                  (or small-temporary-file-directory
-                                                      temporary-file-directory))))
-            (fb (make-temp-file (expand-file-name "scor"
-                                                  (or small-temporary-file-directory
-                                                      temporary-file-directory)))))
+            (fa (make-temp-file
+                 (expand-file-name "scor"
+                                   (or small-temporary-file-directory
+                                       temporary-file-directory))))
+            (fb (make-temp-file
+                 (expand-file-name "scor"
+                                   (or small-temporary-file-directory
+                                       temporary-file-directory)))))
         ;;  save current content as file B
         (when fb
-          (setq tmp (diff-region-format-region-boundary (region-beginning) (region-end)))
+          (setq tmp (diff-region-format-region-boundary
+                     (region-beginning) (region-end)))
           (write-region (car tmp) (cadr tmp) fb))
 
         (when (and fa (file-exists-p fa) fb (file-exists-p fb))
@@ -660,7 +669,9 @@ If step is -1, go backward."
             (write-region (point-min) (point-max) fa))
           ;; diff NOW!
           ;; show the diff output
-          (if (string= (setq diff-output (shell-command-to-string (format "diff -Nabur %s %s" fa fb))) "")
+          (if (string= (setq diff-output
+                             (shell-command-to-string
+                              (format "diff -Nabur %s %s" fa fb))) "")
               ;; two regions are same
               (message "Two regions are SAME!")
             ;; show the diff
@@ -691,6 +702,15 @@ If step is -1, go backward."
 (require 'auto-save)
 (auto-save-enable)
 (setq auto-save-slient t)
+;; }}
+
+;; {{ xterm
+(defun run-after-make-frame-hooks (frame)
+  (select-frame frame)
+  (unless window-system
+    ;; Mouse in a terminal (Use shift to paste with middle button)
+    (xterm-mouse-mode 1)))
+(add-hook 'after-make-frame-functions 'run-after-make-frame-hooks)
 ;; }}
 
 (provide 'init-misc)
