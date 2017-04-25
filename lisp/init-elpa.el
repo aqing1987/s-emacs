@@ -5,6 +5,9 @@
 (defvar melpa-include-packages
   '(bbdb
     color-theme
+    ivy
+    counsel
+    swiper
     wgrep
     robe
     groovy-mode

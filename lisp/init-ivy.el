@@ -1,3 +1,8 @@
+(ivy-mode 1)
+(setq ivy-use-virtual-buffers t)
+(setq ivy-count-format "(%d/%d) ")
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+
 (defvar counsel-process-filename-string nil
   "Give you a chance to change file name string for other counsel-* functions")
 ;; {{ @see http://oremacs.com/2015/04/19/git-grep-ivy/
@@ -321,7 +326,9 @@ Or else, find files since 24 weeks (6 months) ago."
   "Recent files"
   (interactive)
   (unless recentf-mode (recentf-mode 1))
-  (ivy-recentf))
+  (if (fboundp 'counsel-recentf)
+      (counsel-recentf)
+    (ivy-recentf)))
 
 (defun counsel-goto-recent-directory ()
   "Recent directories"
