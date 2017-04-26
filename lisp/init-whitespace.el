@@ -23,6 +23,7 @@
 (global-whitespace-cleanup-mode t)
 
 (global-set-key [remap just-one-space] 'cycle-spacing)
-
+;; activate whitespace-mode to view all whitespace characters
+(global-set-key (kbd "C-c w") 'whitespace-mode)
 
 (provide 'init-whitespace)
