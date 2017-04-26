@@ -14,7 +14,6 @@
     inf-ruby
     simple-httpd
     dsvn
-    move-text
     string-edit ; looks magnars don't update stable tag frequently
     findr
     mwe-log-commands
@@ -208,7 +207,6 @@ locate PACKAGE."
 (require-package 'hl-sexp)
 (require-package 'ibuffer-vc)
 (require-package 'less-css-mode)
-(require-package 'move-text)
 (require-package 'mwe-log-commands)
 (require-package 'page-break-lines)
 (require-package 'pointback)

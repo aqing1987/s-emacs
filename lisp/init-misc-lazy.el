@@ -446,10 +446,6 @@ Current position is preserved."
 (setq midnight-mode t)
 
 (add-auto-mode 'tcl-mode "Portfile\\'")
-;;----------------------------------------------------------------------------
-;; Shift lines up and down with M-up and M-down
-;;----------------------------------------------------------------------------
-(move-text-default-bindings)
 
 (autoload 'vr/replace "visual-regexp")
 (autoload 'vr/query-replace "visual-regexp")
