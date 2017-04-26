@@ -63,6 +63,7 @@
   (require 'init-yasnippet)
   (require 'init-zencoding-mode)
   (require 'google-c-style)
+  (require 'init-ecb)
   (require 'init-gud)
   (require 'init-gtags)
   (require 'init-sh)

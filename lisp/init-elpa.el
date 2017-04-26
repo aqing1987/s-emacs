@@ -265,7 +265,6 @@ locate PACKAGE."
 (require-package 'hydra)
 (require-package 'php-mode)
 (require-package 'xcscope)
-(require-package 'ecb)
 (require-package 'tabbar)
 (require-package 'smex)
 (require-package 'keyfreq)

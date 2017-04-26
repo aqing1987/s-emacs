@@ -41,10 +41,26 @@
 (setq org2nikola-use-verbose-metadata t) ; for nikola 7.7+
 ;; }}
 
+(define-key global-map [(control f4)]  'hexl-mode)
 (define-key global-map (kbd "RET") 'newline-and-indent)
+;; === buffer switch
+(define-key global-map [(f3)] 'switch-to-prev-buffer)
+(define-key global-map [(f4)] 'switch-to-next-buffer)
 
 ;; M-x without meta
 (global-set-key (kbd "C-x C-m") 'execute-extended-command)
+;; goto line
+(global-set-key [(control t)] 'goto-line)
+
+
+;; open init file quickly
+(defun open-init-file()
+  (interactive)
+  (find-file "~/.emacs.d/init.el"))
+
+;; map function open-init-file() to key <f2>
+(global-set-key (kbd "<f2>") 'open-init-file)
+
 
 ;; {{ isearch
 ;; Use regex to search by default

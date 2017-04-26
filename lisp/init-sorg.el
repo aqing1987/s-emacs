@@ -18,8 +18,8 @@
 ;; set agenda directory
 (setq org-agenda-files '("~/org"))
 
-;; set org-agenda
 (global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; disable `validate'
 (setq org-html-validation-link nil)
