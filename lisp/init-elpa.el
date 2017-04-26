@@ -72,11 +72,8 @@
   "Don't install any Melpa packages except these packages")
 
 (setq package-archives
-      '(("gnu"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-        ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-        ("melpa-stable" .
-         "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa-stable/")
-        ("org"   . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+      '(("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+        ("popkit" . "https://elpa.popkit.org/packages/")))
 
 ;;------------------------------------------------------------------------------
 ;; Internal implementation, newbies should NOT touch code below this line!
