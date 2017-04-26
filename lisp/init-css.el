@@ -1,24 +1,54 @@
-;; Colourise CSS colour literals
-;; web-mode does not like rainbow-mode
-(dolist (hook '(css-mode-hook))
-  (add-hook hook 'rainbow-mode))
+;;; Colourise CSS colour literals
+(when (eval-when-compile (>= emacs-major-version 24))
+  ;; rainbow-mode needs color.el, bundled with Emacs >= 24.
+  (require-package 'rainbow-mode)
+  (dolist (hook '(css-mode-hook html-mode-hook sass-mode-hook))
+    (add-hook hook 'rainbow-mode)))
 
-(defun my-css-imenu-make-index ()
-  (save-excursion
-    (imenu--generic-function '((nil "^ *\\([^ ]+\\) *{ *$" 1)))))
+;;; Embedding in html
+(require-package 'mmm-mode)
+(after-load 'mmm-vars
+  (mmm-add-group
+   'html-css
+   '((css-cdata
+      :submode css-mode
+      :face mmm-code-submode-face
+      :front "<style[^>]*>[ \t\n]*\\(//\\)?<!\\[CDATA\\[[ \t]*\n?"
+      :back "[ \t]*\\(//\\)?]]>[ \t\n]*</style>"
+      :insert ((?j js-tag nil @ "<style type=\"text/css\">"
+                   @ "\n" _ "\n" @ "</script>" @)))
+     (css
+      :submode css-mode
+      :face mmm-code-submode-face
+      :front "<style[^>]*>[ \t]*\n?"
+      :back "[ \t]*</style>"
+      :insert ((?j js-tag nil @ "<style type=\"text/css\">"
+                   @ "\n" _ "\n" @ "</style>" @)))
+     (css-inline
+      :submode css-mode
+      :face mmm-code-submode-face
+      :front "style=\""
+      :back "\"")))
+  (dolist (mode (list 'html-mode 'nxml-mode))
+    (mmm-add-mode-ext-class mode "\\.r?html\\(\\.erb\\)?\\'" 'html-css)))
 
-;; node plugins can compile css into javascript
-;; flymake-css is obsolete
-(defun css-mode-hook-setup ()
-  (unless (is-buffer-file-temp)
-    (setq imenu-create-index-function 'my-css-imenu-make-index)))
-(add-hook 'css-mode-hook 'css-mode-hook-setup)
+;;; SASS and SCSS
+(require-package 'sass-mode)
+(require-package 'scss-mode)
+(setq-default scss-compile-at-save nil)
 
-;; compile *.scss to *.css on the pot could break the project build
-(setq scss-compile-at-save nil)
-(defun scss-mode-hook-setup ()
-  (unless (is-buffer-file-temp)
-    (setq imenu-create-index-function 'my-css-imenu-make-index)))
-(add-hook 'scss-mode-hook 'scss-mode-hook-setup)
+;;; LESS
+(require-package 'less-css-mode)
+(require-package 'skewer-less)
+
+;;; Auto-complete CSS keywords
+(after-load 'auto-complete
+  (dolist (hook '(css-mode-hook sass-mode-hook scss-mode-hook))
+    (add-hook hook 'ac-css-mode-setup)))
+
+;;; Use eldoc for syntax hints
+(require-package 'css-eldoc)
+(autoload 'turn-on-css-eldoc "css-eldoc")
+(add-hook 'css-mode-hook 'turn-on-css-eldoc)
 
 (provide 'init-css)
