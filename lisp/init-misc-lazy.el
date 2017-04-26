@@ -19,10 +19,6 @@
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-defun 'disabled nil)
 
-;; But don't show trailing whitespace in SQLi, inf-ruby etc.
-(add-hook 'comint-mode-hook
-          (lambda () (setq show-trailing-whitespace nil)))
-
 (autoload 'sos "sos" "search stackoverflow" t)
 
 ;; ----------------------------------------------------------------------------

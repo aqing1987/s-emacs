@@ -50,6 +50,8 @@
   (require 'init-ivy)
   (require 'init-hippie-expand)
   (require 'init-windows)
+
+  (require 'init-whitespace)
   (require 'init-sessions)
   (require 'init-markdown)
   (require 'init-javascript)

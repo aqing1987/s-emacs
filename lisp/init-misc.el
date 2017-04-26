@@ -241,12 +241,7 @@
     (subword-mode)
     (setq-default electric-pair-inhibit-predicate
                   'electric-pair-conservative-inhibit)
-    (electric-pair-mode 1)
-
-    ;; eldoc, show API doc in minibuffer echo area
-    ;; (turn-on-eldoc-mode)
-    ;; show trailing spaces in a programming mod
-    (setq show-trailing-whitespace t)))
+    (electric-pair-mode 1)))
 
 (add-hook 'prog-mode-hook 'generic-prog-mode-hook-setup)
 ;; some major-modes NOT inherited from prog-mode
