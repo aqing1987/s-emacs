@@ -21,7 +21,8 @@
 ;; Handier way to add modes to auto-mode-alist
 ;;----------------------------------------------------------------------------
 (defun add-auto-mode (mode &rest patterns)
-  "Add entries to `auto-mode-alist' to use `MODE' for all given file `PATTERNS'."
+  "Add entries to `auto-mode-alist' to use `MODE' for all given file
+`PATTERNS'."
   (dolist (pattern patterns)
     (add-to-list 'auto-mode-alist (cons pattern mode))))
 
@@ -30,7 +31,8 @@
 ;; String utilities missing from core emacs
 ;;----------------------------------------------------------------------------
 (defun sanityinc/string-all-matches (regex str &optional group)
-  "Find all matches for `REGEX' within `STR', returning the full match string or group `GROUP'."
+  "Find all matches for `REGEX' within `STR', returning the full match
+string or group `GROUP'."
   (let ((result nil)
         (pos 0)
         (group (or group 0)))
@@ -50,7 +52,8 @@
 (autoload 'find-library-name "find-func")
 (defun sanityinc/directory-of-library (library-name)
   "Return the directory in which the `LIBRARY-NAME' load file is found."
-  (file-name-as-directory (file-name-directory (find-library-name library-name))))
+  (file-name-as-directory
+   (file-name-directory (find-library-name library-name))))
 
 
 ;;----------------------------------------------------------------------------
@@ -96,5 +99,31 @@
         (error "Cannot open tramp file")
       (browse-url (concat "file://" file-name)))))
 
+(defvar load-user-customized-major-mode-hook t)
+(defvar cached-normal-file-full-path nil)
+
+(defun is-buffer-file-temp ()
+  (interactive)
+  "If (buffer-file-name) is nil or a temp file or HTML file converted
+from org file"
+  (let ((f (buffer-file-name)) org (rlt t))
+    (cond
+     ((not load-user-customized-major-mode-hook) t)
+     ((not f)
+      ;; file does not exist at all
+      (setq rlt t))
+     ((string= f cached-normal-file-full-path)
+      (setq rlt nil))
+     ((string-match (concat "^" temporary-file-directory) f)
+      ;; file is create from temp directory
+      (setq rlt t))
+     ((and (string-match "\.html$" f)
+           (file-exists-p
+            (setq org (replace-regexp-in-string "\.html$" ".org" f))))
+      ;; file is a html file exported from org-mode
+      (setq rlt t))
+     (t
+      (setq cached-normal-file-full-path f)
+      (setq rlt nil))) rlt))
 
 (provide 'init-utils)
