@@ -10,6 +10,13 @@
          retval)
      ,@clean-up))
 
+(defmacro after-load (feature &rest body)
+  "After FEATURE is loaded, evaluate BODY."
+  (declare (indent defun))
+  `(eval-after-load ,feature
+     '(progn ,@body)))
+
+
 ;;----------------------------------------------------------------------------
 ;; Handier way to add modes to auto-mode-alist
 ;;----------------------------------------------------------------------------
@@ -22,7 +29,7 @@
 ;;----------------------------------------------------------------------------
 ;; String utilities missing from core emacs
 ;;----------------------------------------------------------------------------
-(defun string-all-matches (regex str &optional group)
+(defun sanityinc/string-all-matches (regex str &optional group)
   "Find all matches for `REGEX' within `STR', returning the full match string or group `GROUP'."
   (let ((result nil)
         (pos 0)
@@ -32,7 +39,7 @@
       (setq pos (match-end group)))
     result))
 
-(defun string-rtrim (str)
+(defun sanityinc/string-rtrim (str)
   "Remove trailing whitespace from `STR'."
   (replace-regexp-in-string "[ \t\n]*$" "" str))
 
@@ -41,7 +48,7 @@
 ;; Find the directory containing a given library
 ;;----------------------------------------------------------------------------
 (autoload 'find-library-name "find-func")
-(defun directory-of-library (library-name)
+(defun sanityinc/directory-of-library (library-name)
   "Return the directory in which the `LIBRARY-NAME' load file is found."
   (file-name-as-directory (file-name-directory (find-library-name library-name))))
 
@@ -72,7 +79,8 @@
     (if (get-buffer new-name)
         (message "A buffer named '%s' already exists!" new-name)
       (progn
-        (rename-file filename new-name 1)
+        (when (file-exists-p filename)
+         (rename-file filename new-name 1))
         (rename-buffer new-name)
         (set-visited-file-name new-name)
         (set-buffer-modified-p nil)))))
@@ -83,109 +91,10 @@
 (defun browse-current-file ()
   "Open the current file as a URL using `browse-url'."
   (interactive)
-  (browse-url-generic (concat "file://" (buffer-file-name))))
+  (let ((file-name (buffer-file-name)))
+    (if (tramp-tramp-file-p file-name)
+        (error "Cannot open tramp file")
+      (browse-url (concat "file://" file-name)))))
 
 
-(require 'cl)
-
-(defmacro with-selected-frame (frame &rest forms)
-  (let ((prev-frame (gensym))
-        (new-frame (gensym)))
-    `(progn
-       (let* ((,new-frame (or ,frame (selected-frame)))
-              (,prev-frame (selected-frame)))
-         (select-frame ,new-frame)
-         (unwind-protect
-             (progn ,@forms)
-           (select-frame ,prev-frame))))))
-
-(defvar load-user-customized-major-mode-hook t)
-(defvar cached-normal-file-full-path nil)
-(defun is-buffer-file-temp ()
-  (interactive)
-  "If (buffer-file-name) is nil or a temp file or HTML file converted from org file"
-  (let ((f (buffer-file-name))
-        org
-        (rlt t))
-    (cond
-     ((not load-user-customized-major-mode-hook) t)
-     ((not f)
-      ;; file does not exist at all
-      (setq rlt t))
-     ((string= f cached-normal-file-full-path)
-      (setq rlt nil))
-     ((string-match (concat "^" temporary-file-directory) f)
-      ;; file is create from temp directory
-      (setq rlt t))
-     ((and (string-match "\.html$" f)
-           (file-exists-p (setq org (replace-regexp-in-string "\.html$" ".org" f))))
-      ;; file is a html file exported from org-mode
-      (setq rlt t))
-     (t
-      (setq cached-normal-file-full-path f)
-      (setq rlt nil)))
-    rlt))
-
-(defun my-guess-mplayer-path ()
-  (let ((rlt "mplayer"))
-    (cond
-     (*is-a-mac* (setq rlt "mplayer -quiet"))
-     (*linux* (setq rlt "mplayer -quiet -stop-xscreensaver"))
-     (*cygwin*
-      (if (file-executable-p "/cygdrive/c/mplayer/mplayer.exe")
-          (setq rlt "/cygdrive/c/mplayer/mplayer.exe -quiet")
-        (setq rlt "/cygdrive/d/mplayer/mplayer.exe -quiet")))
-     (t ; windows
-      (if (file-executable-p "c:\\\\mplayer\\\\mplayer.exe")
-          (setq rlt "c:\\\\mplayer\\\\mplayer.exe -quiet")
-        (setq rlt "d:\\\\mplayer\\\\mplayer.exe -quiet"))))
-    rlt))
-
-(defun my-guess-image-viewer-path (file &optional is-stream)
-  (let ((rlt "mplayer"))
-    (cond
-     (*is-a-mac*
-      (setq rlt
-            (format "open %s &" file)))
-     (*linux*
-      (setq rlt
-            (if is-stream (format "curl -L %s | feh -F - &" file) (format "feh -F %s &" file))))
-     (*cygwin* (setq rlt "feh -F"))
-     (t ; windows
-      (setq rlt
-            (format "rundll32.exe %SystemRoot%\\\\System32\\\\\shimgvw.dll, ImageView_Fullscreen %s &" file))))
-    rlt))
-
-(defun make-concated-string-from-clipboard (concat-char)
-  (let (rlt (str (replace-regexp-in-string "'" "" (upcase (simpleclip-get-contents)))))
-    (setq rlt (replace-regexp-in-string "[ ,-:]+" concat-char str))
-    rlt))
-
-;; {{ diff region SDK
-(defun diff-region-exit-from-certain-buffer (buffer-name)
-  (bury-buffer buffer-name)
-  (winner-undo))
-
-(defmacro diff-region-open-diff-output (content buffer-name)
-  `(let ((rlt-buf (get-buffer-create ,buffer-name)))
-    (save-current-buffer
-      (switch-to-buffer-other-window rlt-buf)
-      (set-buffer rlt-buf)
-      (erase-buffer)
-      (insert ,content)
-      (diff-mode)
-      (goto-char (point-min))
-      ;; evil keybinding
-      (if (fboundp 'evil-local-set-key)
-          (evil-local-set-key 'normal "q"
-                              (lambda ()
-                                (interactive)
-                                (diff-region-exit-from-certain-buffer ,buffer-name))))
-      ;; Emacs key binding
-      (local-set-key (kbd "C-c C-c")
-                     (lambda ()
-                       (interactive)
-                       (diff-region-exit-from-certain-buffer ,buffer-name)))
-      )))
-;; }}
 (provide 'init-utils)
