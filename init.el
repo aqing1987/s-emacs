@@ -64,7 +64,7 @@
   (require 'init-zencoding-mode)
   (require 'google-c-style)
   (require 'init-ecb)
-  (require 'init-gud)
+  (require 'init-gdb)
   (require 'init-gtags)
   (require 'init-sh)
   (require 'init-cscope)
