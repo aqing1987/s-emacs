@@ -20,7 +20,6 @@
 
 
 (require-package 'whitespace-cleanup-mode)
-(global-whitespace-cleanup-mode t)
 
 (global-set-key [remap just-one-space] 'cycle-spacing)
 ;; activate whitespace-mode to view all whitespace characters
