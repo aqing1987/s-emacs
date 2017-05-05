@@ -56,7 +56,6 @@
   (require 'init-markdown)
   (require 'init-javascript)
   (require 'init-sorg)
-  (require 'init-css)
   (require 'init-python-mode)
   (require 'init-lisp)
   (require 'init-elisp)
