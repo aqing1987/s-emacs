@@ -18,6 +18,7 @@
 (add-to-list 'auto-mode-alist '("\\.xul?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.eex?\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.xml?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.rss\\'" . web-mode))
 
 (defun flymake-html-init ()
   (let* ((temp-file (flymake-init-create-temp-buffer-copy
