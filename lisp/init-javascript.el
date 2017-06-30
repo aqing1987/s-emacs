@@ -6,6 +6,7 @@
               js2-mode-must-byte-compile nil
               js2-idle-timer-delay 0.5 ; NOT too big for real time syntax check
               js2-auto-indent-p nil
+              js2-basic-offset 2
               js2-indent-on-enter-key nil ; annoying instead useful
               js2-skip-preprocessor-directives t
               js2-strict-inconsistent-return-warning nil ; return <=> return null
