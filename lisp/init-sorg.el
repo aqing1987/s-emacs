@@ -33,6 +33,11 @@
 ;; disable time stamp
 (setq org-export-time-stamp-file nil)
 
+;; preserve line breaks when export
+(setq org-export-preserve-breaks t)
+
+;; set the table of contents level limit
+(setq org-export-with-toc 2)
 
 ;; === screenshot in org-mode
 ;; require: scrot installed
