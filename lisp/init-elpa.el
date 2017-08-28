@@ -64,6 +64,7 @@
     smex
     keyfreq
     browse-kill-ring
+    graphviz-dot-mode
     ;; make all the color theme packages available
     afternoon-theme
     monokai-theme
@@ -267,5 +268,6 @@ locate PACKAGE."
 (require-package 'smex)
 (require-package 'keyfreq)
 (require-package 'browse-kill-ring)
+(require-package 'graphviz-dot-mode)
 
 (provide 'init-elpa)
