@@ -31,7 +31,6 @@
     htmlize
     scratch
     session
-    crontab-mode
     bookmark+
     flymake-lua
     multi-term
@@ -195,7 +194,6 @@ locate PACKAGE."
 (require-package 'textile-mode)
 (require-package 'coffee-mode)
 (require-package 'flymake-coffee)
-(require-package 'crontab-mode)
 (require-package 'dsvn)
 (require-package 'git-timemachine)
 (require-package 'exec-path-from-shell)
