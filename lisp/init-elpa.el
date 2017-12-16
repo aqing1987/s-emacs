@@ -56,8 +56,6 @@
     dash
     with-editor
     git-commit
-    magit-popup
-    magit
     php-mode
     company-c-headers
     smex
@@ -253,8 +251,6 @@ locate PACKAGE."
 (require-package 'async)
 (require-package 'with-editor)
 (require-package 'git-commit)
-(require-package 'magit-popup)
-(require-package 'magit)
 (require-package 'flx-ido)
 (require-package 'neotree)
 (require-package 'define-word)
