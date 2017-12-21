@@ -11,24 +11,31 @@
 
 (eval-after-load 'company
   '(progn
+     ;; @see https://github.com/company-mode/company-mode/issues/348
+     (require 'company-statistics)
+     (company-statistics-mode)
+
      (add-to-list 'company-backends 'company-cmake)
      (add-to-list 'company-backends 'company-c-headers)
      ;; can't work with TRAMP
      (setq company-backends (delete 'company-ropemacs company-backends))
 
      ;; I don't like the downcase word in company-dabbrev
-     ;; for languages use camel case naming convention
-     ;; company should be case sensitive
-     (setq company-dabbrev-downcase nil)
-     (setq company-dabbrev-ignore-case nil)
-     (setq company-show-numbers t)
-     (setq company-idle-delay 0.2)
-     (setq company-clang-insert-arguments nil)
-     (setq company-require-match nil)
-     (setq company-etags-ignore-case t)
+     (setq company-dabbrev-downcase nil
+           ;; make previous/next selection in the popup cycles
+           company-selection-wrap-around t
+           ;; Some languages use camel case naming convention,
+           ;; so company should be case sensitive.
+           company-dabbrev-ignore-case nil
+           ;; press M-number to choose candidate
+           company-show-numbers t
+           company-idle-delay 0.2
+           company-clang-insert-arguments nil
+           company-require-match nil
+           company-etags-ignore-case t)
 
      (defadvice company-in-string-or-comment
-	 (around company-in-string-or-comment-hack activate)
+         (around company-in-string-or-comment-hack activate)
        ;; you can use (ad-get-arg 0) and (ad-set-arg 0) to tweak the arguments
        (if (memq major-mode '(php-mode html-mode web-mode nxml-mode))
            (setq ad-return-value nil)
@@ -64,7 +71,10 @@
   (when (boundp 'company-backends)
     (make-local-variable 'company-backends)
     (add-to-list 'company-backends 'company-ispell)
-    (setq company-ispell-dictionary ispell-alternate-dictionary)))
+    ;; https://github.com/redguardtoo/emacs.d/issues/473
+    (if (and (boundp 'ispell-alternate-dictionary)
+             ispell-alternate-dictionary)
+        (setq company-ispell-dictionary ispell-alternate-dictionary))))
 
 ;; message-mode use company-bbdb.
 ;; So we should NOT turn on company-ispell
