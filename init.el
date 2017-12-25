@@ -39,6 +39,7 @@
 
 ;; load els
 (let ((file-name-handler-alist nil))
+  (require 'init-proxy)
   (require 'init-modeline)
   (require 'cl-lib)
   (require 'init-utils)

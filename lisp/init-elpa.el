@@ -1,4 +1,5 @@
 (require 'package)
+(package-initialize)
 
 ;; List of VISIBLE packages from melpa-unstable (http://melpa.org)
 ;; Feel free to add more packages!
@@ -47,17 +48,16 @@
     w3m
     company
     company-statistics
+    company-c-headers
     xcscope
     ecb
     yasnippet
-    auto-complete
     tabbar
     async
     dash
     with-editor
     git-commit
     php-mode
-    company-c-headers
     smex
     keyfreq
     browse-kill-ring
@@ -70,6 +70,13 @@
 
 (setq package-archives
       '(
+		;; uncomment below line if you need use GNU ELPA
+		;; ("gnu" . "https://elpa.gnu.org/packages/")
+		("localelpa" . "~/.emacs.d/localelpa/")
+		;; {{ backup repositories
+		("melpa" . "http://mirrors.163.com/elpa/melpa/")
+		("melpa-stable" . "http://mirrors.163.com/elpa/melpa-stable/")
+		;; }}
         ("melpa" . "https://melpa.org/packages/")
         ("melpa-stable" . "https://stable.melpa.org/packages/")
         ))
@@ -241,8 +248,8 @@ locate PACKAGE."
 (require-package 'git-link)
 (require-package 'cliphist)
 (require-package 'yasnippet)
-(require-package 'company-statistics)
 (require-package 'company)
+(require-package 'company-statistics)
 (require-package 'company-c-headers)
 (require-package 'legalese)
 (require-package 'simple-httpd)
