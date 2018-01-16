@@ -270,5 +270,6 @@ locate PACKAGE."
 (require-package 'keyfreq)
 (require-package 'browse-kill-ring)
 (require-package 'graphviz-dot-mode)
+(require-package 'go-mode)
 
 (provide 'init-elpa)

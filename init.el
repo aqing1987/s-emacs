@@ -86,6 +86,7 @@
   (require 'init-company)
   (require 'init-keyfreq)
   (require 'init-httpd)
+  (require 'init-go)
 
   ;; misc has some crucial tools I need immediately
   (require 'init-misc)
